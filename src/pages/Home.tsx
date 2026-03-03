@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles, Calendar, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import profile from '@/data/profile.json'
 import projects from '@/data/projects.json'
+import { blogPosts } from '@/data/blog'
+import { SkillTagsCarousel } from '@/components/common/SkillTagsCarousel'
 
 const featuredProjects = projects.filter((p) => p.featured).slice(0, 3)
+const featuredBlogs = blogPosts.slice(0, 3)
 
 // Animation variants
 const staggerContainer = {
@@ -165,73 +168,92 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Skills Section */}
+      {/* Featured Blogs Section */}
       <section className="section-padding bg-[#030305] relative">
-        <div className="max-w-6xl mx-auto px-6">
+        {/* Gradient accent */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] rounded-full bg-[#7c6af5]/[0.03] blur-[100px]" />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white text-center mb-4">
-              技能专长
-            </h2>
-            <p className="text-lg text-zinc-400 text-center max-w-xl mx-auto">
-              多年积累的技术栈，持续学习与探索
-            </p>
-          </motion.div>
-
-          {['frontend', 'backend', 'tools'].map((category, index) => {
-            const categorySkills = profile.skills.filter(
-              (s) => s.category === category
-            )
-            const categoryNames = {
-              frontend: '前端开发',
-              backend: '后端开发',
-              tools: '开发工具',
-            }
-            const accentColors = {
-              frontend: 'from-[#5b8ff5] to-[#7c6af5]',
-              backend: 'from-[#7c6af5] to-[#a855f7]',
-              tools: 'from-[#3b82f6] to-[#5b8ff5]',
-            }
-            return (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="mb-12 last:mb-0"
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-16">
+              <div>
+                <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-3">
+                  精选博客
+                </h2>
+                <p className="text-lg text-zinc-400">
+                  技术心得与开发经验分享
+                </p>
+              </div>
+              <Link
+                to="/blog"
+                className="group inline-flex items-center text-[#5b8ff5] hover:text-[#7c6af5] font-medium transition-colors"
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <div
-                    className={`w-2 h-2 rounded-full bg-gradient-to-r ${accentColors[category as keyof typeof accentColors]}`}
-                  />
-                  <h3 className="text-lg font-medium text-white">
-                    {categoryNames[category as keyof typeof categoryNames]}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {categorySkills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: skillIndex * 0.03 }}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="group px-5 py-3 bg-[#111113] rounded-2xl cursor-default transition-all duration-300 hover:bg-[#161618] hover:border-white/10 border border-white/[0.06]"
-                    >
-                      <span className="text-white font-medium">{skill.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )
-          })}
+                查看全部
+                <ArrowRight
+                  size={18}
+                  className="ml-1 group-hover:translate-x-1 transition-transform"
+                />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {featuredBlogs.map((post, index) => (
+                <motion.article
+                  key={post.slug}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    className="group block p-6 rounded-2xl border border-white/[0.06] bg-[#0a0a0c] hover:bg-[#111113] hover:border-white/[0.1] transition-all duration-300 h-full"
+                  >
+                    {/* Meta */}
+                    <div className="flex items-center gap-4 text-xs text-zinc-500 mb-4">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar size={14} />
+                        {post.date}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock size={14} />
+                        {post.readTime} 分钟
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-[#5b8ff5] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    <p className="text-zinc-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.slice(0, 2).map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 text-xs text-[#5b8ff5] bg-[#5b8ff5]/10 rounded-md font-medium border border-[#5b8ff5]/15"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -314,6 +336,33 @@ export default function Home() {
               ))}
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Tech Tags Section - Moved to bottom with carousel */}
+      <section className="section-padding bg-[#030305] relative overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] rounded-full bg-[#5b8ff5]/[0.02] blur-[120px]" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
+              技术标签
+            </h2>
+            <p className="text-lg text-zinc-400 max-w-xl mx-auto">
+              多年积累的技术栈，持续学习与探索
+            </p>
+          </motion.div>
+
+          <SkillTagsCarousel skills={profile.skills} />
         </div>
       </section>
     </div>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create vite@latest . -- --template react-ts)",
+      "Bash(npm init -y)",
+      "Bash(npm install react react-dom react-router-dom framer-motion lucide-react && npm install -D vite @vitejs/plugin-react typescript @types/react @types/react-dom @types/node tailwindcss @tailwindcss/vite)",
+      "Bash(npm run dev)",
+      "Bash(git remote set-url origin git@github.com:coderPanz/AboutMe.git && git remote -v)",
+      "Bash(npm install vite-plugin-markdown --save-dev)",
+      "Bash(npm install buffer --save)",
+      "Bash(npm run build 2>&1)",
+      "Bash(npm install vite-plugin-node-polyfills --save-dev)",
+      "Bash(npm uninstall gray-matter vite-plugin-node-polyfills buffer)",
+      "Bash(git add package.json package-lock.json src/data/blog.ts src/utils/markdown.ts src/vite-env.d.ts vite.config.ts)",
+      "Bash(git commit -m \"$\\(cat <<'EOF'\nfix: 修复 Markdown 解析的 Buffer 兼容性问题\n\n- 移除 gray-matter 依赖，使用轻量级自定义 frontmatter 解析\n- 添加 vite-env.d.ts 类型声明\n- 使用 Vite 的 ?raw 查询参数导入 markdown 文件\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)"
+    ]
+  }
+}
