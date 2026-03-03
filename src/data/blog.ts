@@ -1,17 +1,17 @@
 import { createBlogPost, type BlogPost } from '../utils/markdown'
 
-// 使用 Vite 的 import.meta.glob 导入所有 markdown 文件
-const markdownFiles = import.meta.glob<{ default: string }>(
+// 使用 Vite 的 ?raw 后缀导入 markdown 文件作为字符串
+const modules = import.meta.glob<string>(
   '../content/blog/*.md',
-  { eager: true }
+  { eager: true, query: '?raw', import: 'default' }
 )
 
 // 解析所有博客文章
-export const blogPosts: BlogPost[] = Object.entries(markdownFiles)
-  .map(([path, module]) => {
+export const blogPosts: BlogPost[] = Object.entries(modules)
+  .map(([path, content]) => {
     // 从文件路径提取 slug
     const slug = path.match(/\/([^/]+)\.md$/)?.[1] || ''
-    return createBlogPost(slug, module.default)
+    return createBlogPost(slug, content)
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
