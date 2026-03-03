@@ -5,7 +5,7 @@ date: 2024-03-05
 tags:
   - CSS
   - Tailwind
-category: 技术
+category: JavaScript
 readTime: 6
 ---
 

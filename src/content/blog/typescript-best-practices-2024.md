@@ -5,7 +5,7 @@ date: 2024-03-10
 tags:
   - TypeScript
   - Best Practices
-category: 技术
+category: TypeScript
 readTime: 12
 ---
 

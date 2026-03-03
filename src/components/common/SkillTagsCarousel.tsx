@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { SkillIcon, getSkillColor } from './SkillIcon'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 interface SkillTag {
   name: string

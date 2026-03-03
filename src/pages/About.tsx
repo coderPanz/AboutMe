@@ -106,50 +106,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* Education */}
-        <section className="mb-16">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-2xl font-semibold text-white mb-8"
-          >
-            教育背景
-          </motion.h2>
-
-          <div className="space-y-6">
-            {experience.education.map((edu, index) => (
-              <motion.div
-                key={edu.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card-glow rounded-xl p-6"
-              >
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">
-                      {edu.school}
-                    </h3>
-                    <p className="text-zinc-400 text-sm">
-                      {edu.degree} · {edu.major}
-                    </p>
-                  </div>
-                  <span className="text-sm text-zinc-500 font-mono mt-1 sm:mt-0">
-                    {edu.period}
-                  </span>
-                </div>
-                {edu.description && (
-                  <p className="text-zinc-400 text-sm mt-3">
-                    {edu.description}
-                  </p>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
         {/* Skills */}
         <section>
           <motion.h2

@@ -1,8 +1,8 @@
 {
-  "name": "张三",
-  "title": "全栈开发工程师",
+  "name": "潘",
+  "title": "AI 前端开发工程师",
   "avatar": "/avatar.jpg",
-  "bio": "热爱技术，专注于 Web 开发领域。拥有5年前端开发经验，熟练掌握 React、Vue、Node.js 等技术栈。喜欢探索新技术，乐于分享知识。",
+  "bio": "关于我的一些想法都在这里",
   "skills": [
     { "name": "React", "level": 90, "category": "frontend" },
     { "name": "TypeScript", "level": 85, "category": "frontend" },

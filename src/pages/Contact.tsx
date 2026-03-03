@@ -114,8 +114,7 @@ export default function Contact() {
               期待与您合作
             </h2>
             <p className="text-zinc-400 leading-relaxed">
-              无论是项目合作、技术咨询还是其他任何问题，我都很乐意为您提供帮助。
-              通常我会在 24 小时内回复您的消息。
+              无论是项目合作、技术探讨、人生规划、还是其他任何问题，我们都可以一起聊聊。
             </p>
           </div>
         </motion.div>

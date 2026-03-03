@@ -13,7 +13,8 @@
       "Bash(npm uninstall gray-matter vite-plugin-node-polyfills buffer)",
       "Bash(git add package.json package-lock.json src/data/blog.ts src/utils/markdown.ts src/vite-env.d.ts vite.config.ts)",
       "Bash(git commit -m \"$\\(cat <<'EOF'\nfix: 修复 Markdown 解析的 Buffer 兼容性问题\n\n- 移除 gray-matter 依赖，使用轻量级自定义 frontmatter 解析\n- 添加 vite-env.d.ts 类型声明\n- 使用 Vite 的 ?raw 查询参数导入 markdown 文件\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(git checkout src/pages/Home.tsx)"
     ]
   }
 }

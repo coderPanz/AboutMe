@@ -6,6 +6,7 @@ export interface BlogPostFrontmatter {
   category: string
   readTime: number
   coverImage?: string
+  pinned?: boolean
 }
 
 export interface BlogPost {
@@ -18,6 +19,7 @@ export interface BlogPost {
   category: string
   date: string
   readTime: number
+  pinned?: boolean
 }
 
 /**
@@ -53,6 +55,12 @@ function parseFrontmatter(markdown: string): { frontmatter: Record<string, unkno
           .slice(1, -1)
           .split(',')
           .map(s => s.trim().replace(/^['"]|['"]$/g, ''))
+      } else if (value === 'true' || value === 'false') {
+        // 处理布尔值
+        frontmatter[key] = value === 'true'
+      } else if (!isNaN(Number(value)) && value.trim() !== '') {
+        // 处理数字类型
+        frontmatter[key] = Number(value)
       } else {
         // 普通值，移除引号
         frontmatter[key] = value.replace(/^['"]|['"]$/g, '')
@@ -76,7 +84,7 @@ export function parseMarkdown(markdown: string): {
 } {
   const { frontmatter, content } = parseFrontmatter(markdown)
   return {
-    frontmatter: frontmatter as BlogPostFrontmatter,
+    frontmatter: frontmatter as unknown as BlogPostFrontmatter,
     content,
   }
 }
@@ -96,5 +104,6 @@ export function createBlogPost(slug: string, markdown: string): BlogPost {
     category: frontmatter.category,
     date: frontmatter.date,
     readTime: frontmatter.readTime,
+    pinned: frontmatter.pinned,
   }
 }

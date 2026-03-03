@@ -15,6 +15,16 @@ export const blogPosts: BlogPost[] = Object.entries(modules)
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
+// 获取置顶文章
+export function getPinnedPosts(): BlogPost[] {
+  return blogPosts.filter((post) => post.pinned)
+}
+
+// 获取非置顶文章
+export function getNonPinnedPosts(): BlogPost[] {
+  return blogPosts.filter((post) => !post.pinned)
+}
+
 // 根据 slug 获取单篇文章
 export function getBlogPost(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.slug === slug)
@@ -33,4 +43,17 @@ export function getBlogPostsByTag(tag: string): BlogPost[] {
 // 按分类筛选文章
 export function getBlogPostsByCategory(category: string): BlogPost[] {
   return blogPosts.filter((post) => post.category === category)
+}
+
+// 获取所有分类及其文章数量
+export function getAllCategories(): { name: string; count: number }[] {
+  const categoryMap = new Map<string, number>()
+  blogPosts.forEach((post) => {
+    const count = categoryMap.get(post.category) || 0
+    categoryMap.set(post.category, count + 1)
+  })
+  return Array.from(categoryMap.entries()).map(([name, count]) => ({
+    name,
+    count,
+  }))
 }

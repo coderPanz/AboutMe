@@ -7,6 +7,7 @@ tags:
   - Frontend
 category: 技术
 readTime: 8
+pinned: true
 ---
 
 ## React 19 简介
