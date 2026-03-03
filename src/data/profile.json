@@ -1,0 +1,26 @@
+{
+  "name": "张三",
+  "title": "全栈开发工程师",
+  "avatar": "/avatar.jpg",
+  "bio": "热爱技术，专注于 Web 开发领域。拥有5年前端开发经验，熟练掌握 React、Vue、Node.js 等技术栈。喜欢探索新技术，乐于分享知识。",
+  "skills": [
+    { "name": "React", "level": 90, "category": "frontend" },
+    { "name": "TypeScript", "level": 85, "category": "frontend" },
+    { "name": "Vue", "level": 80, "category": "frontend" },
+    { "name": "Next.js", "level": 75, "category": "frontend" },
+    { "name": "Tailwind CSS", "level": 85, "category": "frontend" },
+    { "name": "Node.js", "level": 75, "category": "backend" },
+    { "name": "NestJS", "level": 70, "category": "backend" },
+    { "name": "MongoDB", "level": 70, "category": "backend" },
+    { "name": "PostgreSQL", "level": 65, "category": "backend" },
+    { "name": "Git", "level": 85, "category": "tools" },
+    { "name": "Docker", "level": 70, "category": "tools" },
+    { "name": "Figma", "level": 60, "category": "tools" }
+  ],
+  "social": {
+    "github": "https://github.com/yourusername",
+    "linkedin": "https://linkedin.com/in/yourusername",
+    "twitter": "https://twitter.com/yourusername",
+    "email": "your.email@example.com"
+  }
+}

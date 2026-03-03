@@ -1,0 +1,125 @@
+import { motion } from 'framer-motion'
+import { Github, Linkedin, Mail, Twitter, ExternalLink } from 'lucide-react'
+import profile from '@/data/profile.json'
+
+const socialLinks = [
+  {
+    key: 'github',
+    icon: Github,
+    label: 'GitHub',
+  },
+  {
+    key: 'linkedin',
+    icon: Linkedin,
+    label: 'LinkedIn',
+  },
+  {
+    key: 'twitter',
+    icon: Twitter,
+    label: 'Twitter',
+  },
+  {
+    key: 'email',
+    icon: Mail,
+    label: 'Email',
+  },
+]
+
+export default function Contact() {
+  return (
+    <div className="bg-[#030305] min-h-screen">
+      <div className="max-w-4xl mx-auto px-6 py-20">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-4">
+            联系我
+          </h1>
+          <p className="text-lg text-zinc-400">
+            如果你有任何问题或合作意向，欢迎通过以下方式联系我
+          </p>
+        </motion.div>
+
+        {/* Social Links Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
+          {socialLinks.map((social, index) => {
+            if (!profile.social[social.key as keyof typeof profile.social]) {
+              return null
+            }
+
+            const Icon = social.icon
+            const url =
+              social.key === 'email'
+                ? `mailto:${profile.social.email}`
+                : profile.social[social.key as keyof typeof profile.social]
+
+            return (
+              <motion.a
+                key={social.key}
+                href={url}
+                target={social.key !== 'email' ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="group relative p-6 rounded-2xl card-glow overflow-hidden"
+              >
+                <div className="flex items-center gap-4">
+                  {/* Icon */}
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5b8ff5] to-[#7c6af5] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#5b8ff5]/25 transition-shadow">
+                    <Icon className="text-white" size={22} />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-[#5b8ff5] transition-colors">
+                      {social.label}
+                    </h3>
+                    <p className="text-zinc-500 text-sm truncate">
+                      {social.key === 'email'
+                        ? profile.social.email
+                        : social.label}
+                    </p>
+                  </div>
+
+                  {/* Arrow */}
+                  <ExternalLink
+                    size={18}
+                    className="text-zinc-600 group-hover:text-[#5b8ff5] transition-colors flex-shrink-0"
+                  />
+                </div>
+              </motion.a>
+            )
+          })}
+        </div>
+
+        {/* Message Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="relative rounded-2xl p-8 overflow-hidden"
+        >
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#5b8ff5]/[0.08] to-[#7c6af5]/[0.08]" />
+          <div className="absolute inset-0 border border-[#5b8ff5]/[0.2] rounded-2xl" />
+
+          <div className="relative z-10">
+            <h2 className="text-xl font-semibold text-white mb-3">
+              期待与您合作
+            </h2>
+            <p className="text-zinc-400 leading-relaxed">
+              无论是项目合作、技术咨询还是其他任何问题，我都很乐意为您提供帮助。
+              通常我会在 24 小时内回复您的消息。
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,38 @@
+{
+  "work": [
+    {
+      "id": "work-1",
+      "company": "某科技公司",
+      "position": "高级前端工程师",
+      "period": "2022.03 - 至今",
+      "description": "负责公司核心产品的前端架构设计和开发，带领5人前端团队完成多个项目交付。主导前端技术栈升级，性能优化提升40%。",
+      "technologies": ["React", "TypeScript", "GraphQL", "Tailwind CSS"]
+    },
+    {
+      "id": "work-2",
+      "company": "某互联网公司",
+      "position": "前端开发工程师",
+      "period": "2020.06 - 2022.02",
+      "description": "参与电商平台的前端开发，负责商品管理、订单系统等模块。独立完成移动端适配和性能优化工作。",
+      "technologies": ["Vue", "JavaScript", "Element UI", "Webpack"]
+    },
+    {
+      "id": "work-3",
+      "company": "某创业公司",
+      "position": "前端开发实习生",
+      "period": "2019.09 - 2020.05",
+      "description": "参与公司官网和小程序开发，学习并实践前端开发流程和规范。",
+      "technologies": ["HTML", "CSS", "JavaScript", "微信小程序"]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-1",
+      "school": "某某大学",
+      "degree": "本科",
+      "major": "计算机科学与技术",
+      "period": "2016.09 - 2020.06",
+      "description": "主修数据结构、算法、计算机网络、操作系统等课程。参与校内编程比赛获得二等奖。"
+    }
+  ]
+}
