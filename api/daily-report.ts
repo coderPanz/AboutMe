@@ -103,6 +103,7 @@ async function generateReport(): Promise<DailyReportData> {
       { role: 'user', content: prompt },
     ],
     enable_search: true,
+    enable_thinking: false,
   })
 
   const raw = completion.choices[0]?.message?.content
