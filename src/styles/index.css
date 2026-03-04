@@ -417,3 +417,150 @@ pre code {
   border-radius: 12px;
   border: 1px solid var(--border-subtle);
 }
+
+/* ================================
+ * Hero Slogan: 無限進步
+ * ================================ */
+
+.slogan-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.75rem;
+  background: #000000;
+  border-radius: 999px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.85),
+    0 0 40px rgba(91, 143, 245, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.slogan-text {
+  position: relative;
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  font-size: clamp(2.75rem, 8vw, 4.75rem);
+  line-height: 1;
+  text-rendering: geometricPrecision;
+  transform: skewX(-14deg);
+  /* Base: pure white */
+  color: #ffffff;
+  text-shadow:
+    -4px 0 0 #000000,
+    0 0 24px rgba(255, 255, 255, 0.18);
+}
+
+/* Optional gradient variants */
+.slogan-text--blue {
+  background: linear-gradient(120deg, #165dff 0%, #00c6ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.slogan-text--silver {
+  background: linear-gradient(120deg, #e0e0e0 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Flowing highlight sweep */
+.slogan-text::after {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(0, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.08) 70%,
+    transparent 100%
+  );
+  opacity: 0.9;
+  filter: blur(2px);
+  mix-blend-mode: screen;
+  transform: translateX(-120%);
+  animation: slogan-sweep 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes slogan-sweep {
+  0% {
+    transform: translateX(-130%);
+  }
+  60% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+/* Hover lift + shadow */
+.slogan-interactive {
+  transition:
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+  will-change: transform, box-shadow;
+}
+
+.slogan-interactive:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.9),
+    0 0 50px rgba(91, 143, 245, 0.6);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Subtle glitch effect */
+.slogan-glitch {
+  position: relative;
+}
+
+.slogan-glitch::before,
+.slogan-glitch::after {
+  content: '無限進步';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.08;
+  transform: skewX(-14deg);
+}
+
+.slogan-glitch::before {
+  color: #00ffff;
+  clip-path: inset(0 0 55% 0);
+  animation: slogan-glitch 4s steps(1, end) infinite;
+}
+
+.slogan-glitch::after {
+  color: #ff4d8b;
+  clip-path: inset(45% 0 0 0);
+  animation: slogan-glitch 4s steps(1, end) infinite reverse;
+}
+
+@keyframes slogan-glitch {
+  0%,
+  82%,
+  100% {
+    transform: translate(0, 0) skewX(-14deg);
+  }
+  84% {
+    transform: translate(-1px, 1px) skewX(-14deg);
+  }
+  86% {
+    transform: translate(2px, -1px) skewX(-14deg);
+  }
+  88% {
+    transform: translate(-2px, 1px) skewX(-14deg);
+  }
+  90% {
+    transform: translate(1px, -1px) skewX(-14deg);
+  }
+}

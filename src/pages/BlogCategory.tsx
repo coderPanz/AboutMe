@@ -3,6 +3,11 @@ import { Link, useParams } from 'react-router-dom'
 import { Calendar, Clock, ChevronRight, ArrowLeft } from 'lucide-react'
 import { getBlogPostsByCategory } from '../data/blog'
 
+// 获取文章的完整 slug 路径
+function getPostSlug(post: ReturnType<typeof getBlogPostsByCategory>[0]): string {
+  return (post as typeof post & { fullSlug: string }).fullSlug || post.slug
+}
+
 export default function BlogCategory() {
   const { category } = useParams<{ category: string }>()
   const decodedCategory = category ? decodeURIComponent(category) : ''
@@ -44,7 +49,7 @@ export default function BlogCategory() {
               transition={{ duration: 0.5, delay: index * 0.05 }}
             >
               <Link
-                to={`/blog/${post.slug}`}
+                to={`/blog/${getPostSlug(post)}`}
                 className="group block p-6 rounded-xl border border-white/[0.06] bg-[#0a0a0c] hover:bg-[#111113] hover:border-white/[0.1] transition-all duration-300"
               >
                 <div className="flex items-start justify-between gap-4">

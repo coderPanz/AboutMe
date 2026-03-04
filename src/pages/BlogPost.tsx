@@ -5,7 +5,7 @@ import { getBlogPost } from '../data/blog'
 import { MarkdownRenderer } from '../components/common/MarkdownRenderer'
 
 export default function BlogPost() {
-  const { slug } = useParams<{ slug: string }>()
+  const { '*': slug } = useParams<{ '*': string }>()
   const post = slug ? getBlogPost(slug) : null
 
   if (!post) {

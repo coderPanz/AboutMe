@@ -1,17 +1,31 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Calendar, Clock, ChevronRight, FileText, Cpu, Code2, FileCode, Layers, Bot } from 'lucide-react'
+import { Calendar, Clock, ChevronRight, FileText, Cpu, Code2, FileCode, Layers, Bot, Wrench, Terminal, Palette, Container, Cloud, Brain, Boxes, Network, LucideIcon } from 'lucide-react'
 import { blogPosts } from '../data/blog'
 
 // 分类数据
-const categories = [
+const categories: { name: string; icon: LucideIcon; color: string }[] = [
   { name: 'AI-SKILLS', icon: Bot, color: '#9333ea' },
   { name: 'JavaScript', icon: FileText, color: '#f7df1e' },
   { name: 'TypeScript', icon: FileCode, color: '#3178c6' },
   { name: 'React', icon: Layers, color: '#61dafb' },
   { name: 'Vue', icon: Code2, color: '#4fc08d' },
   { name: 'AI-MCP', icon: Cpu, color: '#f97316' },
+  { name: 'Agent', icon: Brain, color: '#10b981' },
+  { name: 'ClaudeCode', icon: Terminal, color: '#d97706' },
+  { name: 'CSS', icon: Palette, color: '#06b6d4' },
+  { name: 'Docker', icon: Container, color: '#2496ed' },
+  { name: 'K8s', icon: Cloud, color: '#326ce5' },
+  { name: 'LangChain', icon: Network, color: '#7c3aed' },
+  { name: 'MCP', icon: Boxes, color: '#ef4444' },
+  { name: 'Nest', icon: Wrench, color: '#e11d48' },
+  { name: 'Python', icon: Code2, color: '#3776ab' },
 ]
+
+// 获取文章的完整 slug 路径
+function getPostSlug(post: typeof blogPosts[0]): string {
+  return (post as typeof post & { fullSlug: string }).fullSlug || post.slug
+}
 
 export default function Blog() {
   const recentPosts = blogPosts.slice(0, 2)
@@ -43,7 +57,7 @@ export default function Blog() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link
-                to={`/blog/${post.slug}`}
+                to={`/blog/${getPostSlug(post)}`}
                 className="group block p-8 rounded-2xl border border-white/[0.06] bg-[#0a0a0c] hover:bg-[#111113] hover:border-white/[0.1] transition-all duration-300"
               >
                 {/* Meta */}
@@ -89,7 +103,7 @@ export default function Blog() {
           transition={{ duration: 0.6 }}
         >
           <h3 className="text-xl font-semibold text-white mb-6">文章分类</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {categories.map((category, index) => (
               <motion.div
                 key={category.name}
