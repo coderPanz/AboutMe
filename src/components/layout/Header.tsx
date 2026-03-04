@@ -8,6 +8,7 @@ const navLinks = [
   { path: '/about', label: '关于' },
   { path: '/projects', label: '项目' },
   { path: '/blog', label: '博客' },
+  { path: '/daily', label: '每日热点' },
   { path: '/contact', label: '联系' },
 ]
 

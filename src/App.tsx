@@ -7,6 +7,7 @@ import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import BlogCategory from './pages/BlogCategory'
 import Contact from './pages/Contact'
+import DailyReport from './pages/DailyReport'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="blog" element={<Blog />} />
         <Route path="blog/*" element={<BlogPost />} />
         <Route path="blog/category/:category" element={<BlogCategory />} />
+        <Route path="daily" element={<DailyReport />} />
         <Route path="contact" element={<Contact />} />
       </Route>
     </Routes>
