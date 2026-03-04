@@ -93,7 +93,7 @@ async function generateReport(): Promise<DailyReportData> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const create = openai.chat.completions.create.bind(openai.chat.completions) as any
   const completion = await create({
-    model: 'qwen3.5-plus',
+    model: 'qwen3.5-flash',
     messages: [
       {
         role: 'system',
