@@ -1,13 +1,17 @@
 {
-  "functions": {
-    "src/api/**/*.ts": {
-      "runtime": "vercel"
-    }
-  },
+  "devCommand": "vite",
   "crons": [
     {
-      "path": "/api/daily-report",
+      "path": "/api/cron/refresh",
       "schedule": "0 0 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "api/daily-report.ts": {
+      "maxDuration": 60
+    },
+    "api/cron/refresh.ts": {
+      "maxDuration": 60
+    }
+  }
 }
