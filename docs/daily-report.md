@@ -89,20 +89,19 @@ npm run build
 ## 文件结构
 
 ```
-api/
-├── news.ts                    # 获取热点新闻
-├── daily-report.ts            # 生成/获取日报
-└── daily-reports/
-    └── [date].ts              # 获取指定日期日报
-
 src/
+├── api/
+│   ├── news.ts                    # 获取热点新闻
+│   ├── daily-report.ts            # 生成/获取日报
+│   └── daily-reports/
+│       └── [date].ts              # 获取指定日期日报
 ├── pages/
-│   └── DailyReport.tsx        # 日报展示页面
-├── App.tsx                    # 路由配置
+│   └── DailyReport.tsx            # 日报展示页面
+├── App.tsx                        # 路由配置
 └── components/
     └── layout/
-        └── Header.tsx         # 导航栏
+        └── Header.tsx             # 导航栏
 
-vercel.json                    # Cron 配置
-.env.example                   # 环境变量示例
+vercel.json                        # Cron 配置
+.env.example                       # 环境变量示例
 ```

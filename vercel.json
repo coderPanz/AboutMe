@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "src/api/**/*.ts": {
+      "runtime": "vercel"
+    }
+  },
   "crons": [
     {
       "path": "/api/daily-report",
