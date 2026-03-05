@@ -5,12 +5,12 @@ import { blogPosts } from '../data/blog'
 
 // 分类数据
 const categories: { name: string; icon: LucideIcon; color: string }[] = [
-  { name: 'AI-SKILLS', icon: Bot, color: '#9333ea' },
+  { name: 'Agent-SKILLS', icon: Bot, color: '#9333ea' },
   { name: 'JavaScript', icon: FileText, color: '#f7df1e' },
   { name: 'TypeScript', icon: FileCode, color: '#3178c6' },
   { name: 'React', icon: Layers, color: '#61dafb' },
   { name: 'Vue', icon: Code2, color: '#4fc08d' },
-  { name: 'AI-MCP', icon: Cpu, color: '#f97316' },
+  { name: 'Agent-MCP', icon: Cpu, color: '#f97316' },
   { name: 'Agent', icon: Brain, color: '#10b981' },
   { name: 'ClaudeCode', icon: Terminal, color: '#d97706' },
   { name: 'CSS', icon: Palette, color: '#06b6d4' },
