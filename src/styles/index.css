@@ -20,14 +20,14 @@
   --text-tertiary: #6e6e73;
   --text-muted: #52525b;
 
-  /* Accent - Subtle blue-purple gradient */
+  /* Accent - Blue gradient */
   --accent-primary: #5b8ff5;
-  --accent-secondary: #7c6af5;
-  --accent-gradient: linear-gradient(135deg, #5b8ff5 0%, #7c6af5 100%);
+  --accent-secondary: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, #5b8ff5 0%, #3b82f6 100%);
 
   /* Glow effects */
   --glow-blue: rgba(91, 143, 245, 0.4);
-  --glow-purple: rgba(124, 106, 245, 0.3);
+  --glow-blue-light: rgba(59, 130, 246, 0.3);
 
   /* Border - Hairline subtle */
   --border-hairline: rgba(255, 255, 255, 0.03);
@@ -337,7 +337,7 @@ pre code {
     rgba(91, 143, 245, 0.3) 0%,
     transparent 40%,
     transparent 60%,
-    rgba(124, 106, 245, 0.3) 100%);
+    rgba(59, 130, 246, 0.3) 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

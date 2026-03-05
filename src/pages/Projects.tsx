@@ -70,7 +70,7 @@ export default function Projects() {
                 onClick={() => setStatusFilter(status)}
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                   statusFilter === status
-                    ? 'bg-gradient-to-r from-[#5b8ff5] to-[#7c6af5] text-white shadow-lg shadow-[#5b8ff5]/25'
+                    ? 'bg-gradient-to-r from-[#5b8ff5] to-[#3b82f6] text-white shadow-lg shadow-[#5b8ff5]/25'
                     : 'bg-[#111113] text-zinc-400 hover:text-white hover:bg-[#161618] border border-white/[0.06]'
                 }`}
               >
@@ -100,7 +100,7 @@ export default function Projects() {
                   className="group relative rounded-2xl overflow-hidden card-glow"
                 >
                   {/* Project image */}
-                  <div className="aspect-video bg-gradient-to-br from-[#5b8ff5] via-[#7c6af5] to-[#a855f7] relative overflow-hidden">
+                  <div className="aspect-video bg-gradient-to-br from-[#5b8ff5] via-[#3b82f6] to-[#06b6d4] relative overflow-hidden">
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-white/15 text-7xl font-bold group-hover:scale-110 transition-transform duration-500">
@@ -155,7 +155,7 @@ export default function Projects() {
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-[#5b8ff5] hover:text-[#7c6af5] text-sm font-medium transition-colors"
+                          className="flex items-center gap-1.5 text-[#5b8ff5] hover:text-[#3b82f6] text-sm font-medium transition-colors"
                         >
                           <ExternalLink size={16} />
                           演示

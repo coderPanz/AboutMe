@@ -92,7 +92,7 @@ export default function Contact() {
           className="relative rounded-2xl p-8 overflow-hidden"
         >
           {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#5b8ff5]/[0.08] to-[#7c6af5]/[0.08]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#5b8ff5]/[0.08] to-[#3b82f6]/[0.08]" />
           <div className="absolute inset-0 border border-[#5b8ff5]/[0.2] rounded-2xl" />
 
           <div className="relative z-10">

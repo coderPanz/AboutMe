@@ -117,7 +117,7 @@ export default function Blog() {
                 {index % 3 !== 0 && (
                   <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px -ml-3">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#5b8ff5]/30 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#7c6af5]/20 to-transparent blur-[1px]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3b82f6]/20 to-transparent blur-[1px]" />
                   </div>
                 )}
 

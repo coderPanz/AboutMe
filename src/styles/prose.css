@@ -26,7 +26,7 @@
 }
 
 .prose a {
-  @apply text-[#5b8ff5] hover:text-[#7c6af5] transition-colors underline underline-offset-2;
+  @apply text-[#5b8ff5] hover:text-[#3b82f6] transition-colors underline underline-offset-2;
 }
 
 .prose ul,

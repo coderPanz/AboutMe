@@ -1,10 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import OpenAI from 'openai'
+import { kv } from '@vercel/kv'
 
 const openai = new OpenAI({
   apiKey: process.env.DASHSCOPE_API_KEY,
   baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
 })
+
+const KV_KEY_PREFIX = 'daily-report:'
 
 interface NewsArticle {
   source: { id: string | null; name: string }
@@ -31,8 +34,8 @@ interface DailyReportData {
   totalArticles: number
 }
 
-// In-memory cache — persists within the same serverless instance
-let cache: { date: string; report: DailyReportData } | null = null
+// In-memory cache (same instance only); primary cache is Vercel KV
+let memoryCache: { date: string; report: DailyReportData } | null = null
 
 function getTodayCN(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Shanghai' })
@@ -150,16 +153,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const today = getTodayCN()
   const forceRefresh = req.query.refresh === 'true' || req.headers['x-cron-refresh'] === '1'
+  const kvKey = `${KV_KEY_PREFIX}${today}`
 
-  if (cache && cache.date === today && !forceRefresh) {
-    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400')
-    res.setHeader('X-Cache', 'HIT')
-    return res.json(cache.report)
+  // 1. 非强制刷新时，先读持久化缓存（Vercel KV），8 点定时任务写入的数据全天可读
+  if (!forceRefresh) {
+    try {
+      const cached = await kv.get<DailyReportData>(kvKey)
+      if (cached && typeof cached === 'object' && cached.date && cached.categories) {
+        res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400')
+        res.setHeader('X-Cache', 'KV-HIT')
+        return res.json(cached)
+      }
+    } catch (e) {
+      // KV 未配置或不可用时仅打日志，继续走生成逻辑
+      console.warn('[daily-report] KV get failed:', e)
+    }
+    // 同实例内存缓存兜底
+    if (memoryCache && memoryCache.date === today) {
+      res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400')
+      res.setHeader('X-Cache', 'MEMORY-HIT')
+      return res.json(memoryCache.report)
+    }
   }
 
   try {
     const report = await generateReport()
-    cache = { date: today, report }
+    memoryCache = { date: today, report }
+
+    // 2. 写入 KV，供后续请求（含当天用户访问）直接命中
+    try {
+      await kv.set(kvKey, report)
+    } catch (e) {
+      console.warn('[daily-report] KV set failed:', e)
+    }
 
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400')
     res.setHeader('X-Cache', 'MISS')
@@ -167,9 +193,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (error) {
     console.error('[daily-report] Error generating report:', error)
 
-    if (cache) {
+    if (memoryCache) {
       res.setHeader('X-Cache', 'STALE')
-      return res.json(cache.report)
+      return res.json(memoryCache.report)
     }
 
     return res.status(500).json({

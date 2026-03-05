@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 /**
- * Cron endpoint called daily at 08:00 CST (00:00 UTC).
- * It triggers a forced refresh of the daily report so the first
- * real user request of the day is served from cache.
+ * 定时任务：每天北京时间 08:00（vercel.json 中 schedule: "0 0 * * *" = UTC 00:00）调用。
+ * 请求 /api/daily-report 并带 x-cron-refresh，强制重新生成当日日报并写入 Vercel KV。
+ * 之后当日用户访问「每日热点」页时，API 直接从 KV 读缓存返回，无需再调大模型，响应即时。
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Vercel Cron sends this header automatically on Pro/Enterprise plans

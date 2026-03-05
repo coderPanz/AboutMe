@@ -14,7 +14,7 @@ export default function BlogPost() {
         <div className="py-16">
           <div className="max-w-2xl mx-auto px-6">
             <h1 className="text-2xl font-semibold text-white mb-4">文章未找到</h1>
-            <Link to="/blog" className="text-[#5b8ff5] hover:text-[#7c6af5] transition-colors">
+            <Link to="/blog" className="text-[#5b8ff5] hover:text-[#3b82f6] transition-colors">
               返回博客列表
             </Link>
           </div>

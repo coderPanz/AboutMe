@@ -31,8 +31,8 @@ export default function About() {
           <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* Avatar placeholder */}
             <div className="relative">
-              <div className="w-24 h-24 bg-gradient-to-br from-[#5b8ff5] to-[#7c6af5] rounded-full" />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#5b8ff5] to-[#7c6af5] rounded-full blur-xl opacity-40" />
+              <div className="w-24 h-24 bg-gradient-to-br from-[#5b8ff5] to-[#3b82f6] rounded-full" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#5b8ff5] to-[#3b82f6] rounded-full blur-xl opacity-40" />
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-semibold text-white mb-2">
@@ -57,7 +57,7 @@ export default function About() {
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#5b8ff5]/50 via-[#7c6af5]/30 to-transparent" />
+            <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#5b8ff5]/50 via-[#3b82f6]/30 to-transparent" />
 
             <div className="space-y-8">
               {experience.work.map((work, index) => (
