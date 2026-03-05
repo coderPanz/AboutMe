@@ -1,27 +1,23 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Twitter, ExternalLink } from 'lucide-react'
-import profile from '@/data/profile.json'
+import { Github, Mail, ExternalLink } from 'lucide-react'
 
 const socialLinks = [
   {
     key: 'github',
     icon: Github,
     label: 'GitHub',
-  },
-  {
-    key: 'linkedin',
-    icon: Linkedin,
-    label: 'LinkedIn',
-  },
-  {
-    key: 'twitter',
-    icon: Twitter,
-    label: 'Twitter',
+    url: 'https://github.com/coderPanz',
+    color: 'from-[#24292e] to-[#2f363d]',
+    iconColor: 'text-white',
   },
   {
     key: 'email',
     icon: Mail,
-    label: 'Email',
+    label: '邮箱',
+    url: 'mailto:3108498426@qq.com',
+    value: '3108498426@qq.com',
+    color: 'from-[#EA4335] to-[#FBBC04]',
+    iconColor: 'text-white',
   },
 ]
 
@@ -47,20 +43,12 @@ export default function Contact() {
         {/* Social Links Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
           {socialLinks.map((social, index) => {
-            if (!profile.social[social.key as keyof typeof profile.social]) {
-              return null
-            }
-
             const Icon = social.icon
-            const url =
-              social.key === 'email'
-                ? `mailto:${profile.social.email}`
-                : profile.social[social.key as keyof typeof profile.social]
 
             return (
               <motion.a
                 key={social.key}
-                href={url}
+                href={social.url}
                 target={social.key !== 'email' ? '_blank' : undefined}
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
@@ -71,26 +59,24 @@ export default function Contact() {
               >
                 <div className="flex items-center gap-4">
                   {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5b8ff5] to-[#7c6af5] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#5b8ff5]/25 transition-shadow">
-                    <Icon className="text-white" size={22} />
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${social.color} flex items-center justify-center group-hover:shadow-lg transition-shadow`}>
+                    <Icon className={social.iconColor} size={22} />
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-semibold text-white group-hover:text-[#5b8ff5] transition-colors">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-white transition-colors">
                       {social.label}
                     </h3>
                     <p className="text-zinc-500 text-sm truncate">
-                      {social.key === 'email'
-                        ? profile.social.email
-                        : social.label}
+                      {social.value || social.label}
                     </p>
                   </div>
 
                   {/* Arrow */}
                   <ExternalLink
                     size={18}
-                    className="text-zinc-600 group-hover:text-[#5b8ff5] transition-colors flex-shrink-0"
+                    className="text-zinc-600 group-hover:text-white transition-colors flex-shrink-0"
                   />
                 </div>
               </motion.a>
