@@ -28,61 +28,59 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'glass-heavy border-b border-white/5'
+          ? 'bg-[#0c0c0c]/95 border-b border-[#1a1a1a]'
           : 'bg-transparent'
       }`}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo - Minimalist */}
+        {/* Logo - Terminal style */}
         <NavLink
           to="/"
-          className="group relative"
+          className="group font-mono"
         >
-          <span className="text-lg font-semibold text-white tracking-tight">
-            About<span className="gradient-text">Me</span>
+          <span className="text-base text-white">
+            <span className="text-[#22c55e]">北漂螺丝钉</span>
           </span>
-          <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300" />
         </NavLink>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav - Terminal style */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
-                `relative px-4 py-2 text-sm font-medium transition-colors ${
+                `relative px-3 py-2 text-sm font-mono transition-colors ${
                   isActive
-                    ? 'text-white'
-                    : 'text-zinc-400 hover:text-white'
+                    ? 'text-[#22c55e]'
+                    : 'text-[#737373] hover:text-[#a3a3a3]'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
+                  <span className="text-[#525252] mr-1">{isActive ? '*' : '·'}</span>
                   {link.label}
-                  {isActive && (
-                    <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-blue-500/50 to-purple-500/50" />
-                  )}
                 </>
               )}
             </NavLink>
           ))}
         </div>
 
-        {/* CTA Button - Desktop */}
+        {/* CTA Button - Desktop - Terminal style */}
         <div className="hidden md:block">
           <a
             href="mailto:contact@example.com"
-            className="btn-primary text-sm"
+            className="btn-primary text-sm font-mono"
           >
-            联系我
+            <span className="text-[#0c0c0c] mr-2">$</span>
+            hire-me
           </a>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors"
+          className="md:hidden p-2 text-[#737373] hover:text-white transition-colors"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -98,9 +96,9 @@ export default function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden glass-heavy border-t border-white/5"
+            className="md:hidden bg-[#0c0c0c]/95 border-t border-[#1a1a1a]"
           >
-            <div className="px-6 py-4 space-y-2">
+            <div className="px-6 py-4 font-mono space-y-1">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.path}
@@ -112,13 +110,14 @@ export default function Header() {
                     to={link.path}
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) =>
-                      `block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                      `block px-4 py-3 text-sm transition-all ${
                         isActive
-                          ? 'bg-white/5 text-white'
-                          : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                          ? 'text-[#22c55e]'
+                          : 'text-[#737373] hover:text-white'
                       }`
                     }
                   >
+                    <span className="text-[#525252] mr-2">{index + 1}.</span>
                     {link.label}
                   </NavLink>
                 </motion.div>
@@ -131,9 +130,10 @@ export default function Header() {
               >
                 <a
                   href="mailto:contact@example.com"
-                  className="block w-full btn-primary text-center text-sm py-3"
+                  className="block w-full btn-primary text-center text-sm py-3 font-mono"
                 >
-                  联系我
+                  <span className="text-[#0c0c0c] mr-2">$</span>
+                  hire-me
                 </a>
               </motion.div>
             </div>

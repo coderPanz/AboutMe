@@ -31,23 +31,26 @@ export default function Blog() {
   const recentPosts = blogPosts.slice(0, 2)
 
   return (
-    <div className="bg-[#030305] min-h-screen">
+    <div className="bg-[#0c0c0c] min-h-screen">
       <div className="max-w-6xl mx-auto px-6 py-20">
-        {/* Header */}
+        {/* Header - Terminal style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6"
+          className="mb-12"
         >
-          <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-4">
+          <h1 className="editorial-display text-5xl md:text-6xl text-white mb-4">
             博客
           </h1>
+          <p className="font-mono text-sm text-[#737373]">
+            <span className="text-[#22c55e]">$</span> wc -l ./blog/*.md
+          </p>
         </motion.div>
 
         {/* Blog Cards - Single column */}
         <div className="grid grid-cols-1 gap-6 mb-16">
-          <h3 className="text-xl font-semibold text-white">最近文章</h3>
+          <h3 className="text-2xl font-semibold text-white mb-6">最近文章</h3>
           {recentPosts.map((post, index) => (
             <motion.div
               key={post.slug}
@@ -58,35 +61,35 @@ export default function Blog() {
             >
               <Link
                 to={`/blog/${getPostSlug(post)}`}
-                className="group block p-8 rounded-2xl border border-white/[0.06] bg-[#0a0a0c] hover:bg-[#111113] hover:border-white/[0.1] transition-all duration-300"
+                className="group block p-8 bg-[#1a1a1a] border border-[#222222] hover:border-[#22c55e] transition-colors"
               >
                 {/* Meta */}
-                <div className="flex items-center gap-4 text-xs text-zinc-500 mb-4">
+                <div className="flex items-center gap-4 text-xs text-[#525252] mb-4 font-mono">
                   <span className="flex items-center gap-1.5">
                     <Calendar size={14} />
                     {post.date}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Clock size={14} />
-                    {post.readTime} 分钟阅读
+                    {post.readTime} min read
                   </span>
                 </div>
 
                 {/* Title */}
-                <h2 className="text-xl font-semibold text-white mb-3 group-hover:text-[#5b8ff5] transition-colors line-clamp-2">
+                <h2 className="text-xl font-semibold text-white mb-3 group-hover:text-[#22c55e] transition-colors line-clamp-2">
                   {post.title}
                 </h2>
 
                 {/* Excerpt */}
-                <p className="text-zinc-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-[#737373] text-sm leading-relaxed mb-4 line-clamp-3">
                   {post.excerpt}
                 </p>
 
                 {/* Arrow */}
-                <div className="flex items-center text-[#5b8ff5] font-medium">
-                  <span className="text-sm">阅读全文</span>
+                <div className="flex items-center text-[#22c55e] font-mono text-sm">
+                  <span>read more</span>
                   <ChevronRight
-                    size={16}
+                    size={14}
                     className="ml-1 group-hover:translate-x-1 transition-transform"
                   />
                 </div>
@@ -95,15 +98,15 @@ export default function Blog() {
           ))}
         </div>
 
-        {/* Category Cards - Three columns with glowing dividers */}
+        {/* Category Cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="text-xl font-semibold text-white mb-6">文章分类</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <h3 className="text-2xl font-semibold text-white mb-6">文章分类</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-px bg-[#1a1a1a] border border-[#1a1a1a]">
             {categories.map((category, index) => (
               <motion.div
                 key={category.name}
@@ -111,26 +114,17 @@ export default function Blog() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (index % 3) * 0.08 }}
-                className="relative"
               >
-                {/* Glowing divider line - between cards in same row */}
-                {index % 3 !== 0 && (
-                  <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px -ml-3">
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#5b8ff5]/30 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3b82f6]/20 to-transparent blur-[1px]" />
-                  </div>
-                )}
-
                 <Link
                   to={`/blog/category/${encodeURIComponent(category.name)}`}
-                  className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/[0.06] bg-[#0a0a0c] hover:bg-[#111113] hover:border-white/[0.1] transition-all duration-300 h-full"
+                  className="group flex flex-col items-center justify-center p-8 bg-[#0c0c0c] hover:bg-[#111111] transition-colors h-full"
                 >
                   <category.icon
-                    size={40}
-                    className="mb-4 group-hover:scale-110 transition-transform"
+                    size={32}
+                    className="mb-3 group-hover:scale-110 transition-transform"
                     style={{ color: category.color }}
                   />
-                  <span className="text-base font-medium text-white group-hover:text-[#5b8ff5] transition-colors">
+                  <span className="text-sm font-mono text-[#a3a3a3] group-hover:text-white transition-colors">
                     {category.name}
                   </span>
                 </Link>
@@ -141,8 +135,10 @@ export default function Blog() {
 
         {/* Empty state */}
         {blogPosts.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-zinc-500">暂无文章</p>
+          <div className="text-center py-20 border border-[#1a1a1a] bg-[#0c0c0c]">
+            <p className="font-mono text-[#525252]">
+              <span className="text-[#ff5f56]">error</span>: no posts found
+            </p>
           </div>
         )}
       </div>

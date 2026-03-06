@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ExternalLink, RefreshCw, Calendar, Clock, TrendingUp } from 'lucide-react'
+import { ExternalLink, RefreshCw, Calendar, Clock, TrendingUp, Globe } from 'lucide-react'
 
 interface NewsArticle {
   source: {
@@ -85,10 +85,10 @@ export default function DailyReport() {
 
   if (loading) {
     return (
-      <div className="bg-[#030305] min-h-screen flex items-center justify-center">
+      <div className="bg-[#0c0c0c] min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-2 border-[#5b8ff5] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-zinc-400">加载中...</p>
+          <div className="w-12 h-12 border-2 border-[#22c55e] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="font-mono text-[#525252]">loading...</p>
         </div>
       </div>
     )
@@ -96,18 +96,23 @@ export default function DailyReport() {
 
   if (error) {
     return (
-      <div className="bg-[#030305] min-h-screen flex items-center justify-center">
-        <div className="text-center max-w-md px-6">
-          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-500 text-2xl">!</span>
+      <div className="bg-[#0c0c0c] min-h-screen flex items-center justify-center">
+        <div className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] max-w-md">
+          <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-[#222222]">
+            <div className="terminal-dot terminal-dot--red" />
+            <div className="terminal-dot terminal-dot--yellow" />
+            <div className="terminal-dot terminal-dot--green" />
+            <span className="ml-4 font-mono text-sm text-[#737373]">error</span>
           </div>
-          <p className="text-red-400 mb-4">{error}</p>
-          <button
-            onClick={fetchReport}
-            className="px-6 py-2 bg-[#5b8ff5] text-white rounded-lg hover:bg-[#5b8ff5]/90 transition-colors"
-          >
-            重试
-          </button>
+          <div className="p-8 bg-[#0c0c0c] text-center">
+            <p className="text-[#ff5f56] font-mono mb-4">error: {error}</p>
+            <button
+              onClick={fetchReport}
+              className="btn-primary text-sm font-mono"
+            >
+              retry
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -118,34 +123,43 @@ export default function DailyReport() {
   const currentCategory = report.categories.find(c => c.name === activeCategory)
 
   return (
-    <div className="bg-[#030305] min-h-screen">
+    <div className="bg-[#0c0c0c] min-h-screen">
       <div className="max-w-4xl mx-auto px-6 py-20">
-        {/* Header */}
+        {/* Header - Terminal style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
+          <div className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] mb-8">
+            <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-[#222222]">
+              <div className="terminal-dot terminal-dot--red" />
+              <div className="terminal-dot terminal-dot--yellow" />
+              <div className="terminal-dot terminal-dot--green" />
+              <span className="ml-4 font-mono text-sm text-[#737373]">curl -X GET /api/daily-report</span>
+            </div>
+          </div>
+
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-2">
+              <h1 className="editorial-display text-5xl md:text-6xl text-white mb-4">
                 每日热点
               </h1>
-              <div className="flex items-center gap-4 text-zinc-400">
+              <div className="flex items-center gap-4 text-[#737373] font-mono text-sm">
                 <span className="flex items-center gap-1.5">
-                  <Calendar size={16} />
+                  <Calendar size={14} />
                   {formatDate(report.date)}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Clock size={16} />
+                  <Clock size={14} />
                   {formatTime(report.generatedAt)}
                 </span>
               </div>
             </div>
             <button
               onClick={fetchReport}
-              className="p-2 bg-white/[0.04] text-zinc-400 hover:text-white rounded-lg border border-white/[0.06] hover:border-[#5b8ff5]/30 transition-colors"
+              className="p-2 bg-[#1a1a1a] text-[#737373] hover:text-[#22c55e] border border-[#222222] hover:border-[#22c55e] transition-colors"
               title="刷新"
             >
               <RefreshCw size={18} />
@@ -153,27 +167,33 @@ export default function DailyReport() {
           </div>
         </motion.div>
 
-        {/* Overview */}
+        {/* Overview - Terminal style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="card-glow rounded-2xl p-6 mb-8"
+          className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] mb-8"
         >
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-[#5b8ff5]/10 rounded-xl">
-              <TrendingUp size={24} className="text-[#5b8ff5]" />
-            </div>
-            <div>
-              <p className="text-white leading-relaxed">{report.overview}</p>
-              <p className="text-zinc-500 text-sm mt-2">
-                共收录 {report.totalArticles} 篇热点新闻
-              </p>
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border-b border-[#222222]">
+            <TrendingUp size={14} className="text-[#525252]" />
+            <span className="font-mono text-xs text-[#737373]">overview</span>
+          </div>
+          <div className="p-6 bg-[#0c0c0c]">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-[#22c55e]/10 rounded">
+                <TrendingUp size={20} className="text-[#22c55e]" />
+              </div>
+              <div>
+                <p className="text-white leading-relaxed">{report.overview}</p>
+                <p className="text-[#525252] text-sm mt-2 font-mono">
+                  <span className="text-[#22c55e]">$</span> total articles: {report.totalArticles}
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Category Tabs */}
+        {/* Category Tabs - Terminal style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -185,10 +205,10 @@ export default function DailyReport() {
               <button
                 key={category.name}
                 onClick={() => setActiveCategory(category.name)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded text-sm font-mono transition-colors ${
                   activeCategory === category.name
-                    ? 'bg-[#5b8ff5] text-white'
-                    : 'bg-white/[0.04] text-zinc-400 hover:text-white border border-white/[0.06] hover:border-[#5b8ff5]/30'
+                    ? 'bg-[#22c55e] text-[#0c0c0c]'
+                    : 'bg-[#1a1a1a] text-[#737373] hover:text-white border border-[#222222]'
                 }`}
               >
                 {categoryNames[category.name] || category.name}
@@ -198,13 +218,13 @@ export default function DailyReport() {
           </div>
         </motion.div>
 
-        {/* Articles List */}
+        {/* Articles List - Terminal style */}
         <motion.div
           key={activeCategory}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="space-y-4"
+          className="space-y-px bg-[#1a1a1a] border border-[#1a1a1a]"
         >
           {currentCategory?.articles.map((article, index) => (
             <motion.a
@@ -215,34 +235,35 @@ export default function DailyReport() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="block card-glow rounded-xl p-5 hover:border-[#5b8ff5]/30 transition-all group"
+              className="block bg-[#0c0c0c] hover:bg-[#111111] p-5 transition-colors group"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[#5b8ff5] text-xs font-medium">
+                    <Globe size={12} className="text-[#525252]" />
+                    <span className="text-[#22c55e] text-xs font-mono">
                       {article.source.name}
                     </span>
-                    <span className="text-zinc-600 text-xs">•</span>
-                    <span className="text-zinc-500 text-xs">
+                    <span className="text-[#525252] text-xs">•</span>
+                    <span className="text-[#525252] text-xs font-mono">
                       {new Date(article.publishedAt).toLocaleTimeString('zh-CN', {
                         hour: '2-digit',
                         minute: '2-digit'
                       })}
                     </span>
                   </div>
-                  <h3 className="text-white font-medium mb-2 line-clamp-2 group-hover:text-[#5b8ff5] transition-colors">
+                  <h3 className="text-white font-medium mb-2 line-clamp-2 group-hover:text-[#22c55e] transition-colors">
                     {article.title}
                   </h3>
                   {article.description && (
-                    <p className="text-zinc-400 text-sm line-clamp-2">
+                    <p className="text-[#737373] text-sm line-clamp-2">
                       {article.description}
                     </p>
                   )}
                 </div>
                 <ExternalLink
-                  size={16}
-                  className="text-zinc-500 group-hover:text-[#5b8ff5] transition-colors flex-shrink-0 mt-1"
+                  size={14}
+                  className="text-[#525252] group-hover:text-[#22c55e] transition-colors flex-shrink-0 mt-1"
                 />
               </div>
             </motion.a>
@@ -251,8 +272,8 @@ export default function DailyReport() {
 
         {/* Empty State */}
         {currentCategory?.articles.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-zinc-500">暂无新闻</p>
+          <div className="text-center py-12 border border-[#1a1a1a] bg-[#0c0c0c]">
+            <p className="font-mono text-[#525252]">no news available</p>
           </div>
         )}
       </div>

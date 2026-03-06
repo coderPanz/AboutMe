@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github, Search } from 'lucide-react'
+import { ExternalLink, Github, Search, Folder } from 'lucide-react'
 import projects from '@/data/projects.json'
 
 type StatusFilter = 'all' | 'completed' | 'developing' | 'archived'
@@ -28,37 +28,37 @@ export default function Projects() {
   })
 
   return (
-    <div className="bg-[#030305] min-h-screen">
+    <div className="bg-[#0c0c0c] min-h-screen">
       <div className="max-w-6xl mx-auto px-6 py-20">
-        {/* Header */}
+        {/* Header - Terminal style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-4">
+          <h1 className="editorial-display text-5xl md:text-6xl text-white mb-4">
             项目作品
           </h1>
-          <p className="text-lg text-zinc-400">
-            探索我创作的作品
+          <p className="font-mono text-sm text-[#737373]">
+            <span className="text-[#22c55e]">$</span> find . -type f -name "*.project"
           </p>
         </motion.div>
 
-        {/* Filters */}
+        {/* Filters - Terminal style */}
         <div className="flex flex-col sm:flex-row gap-4 mb-12">
           {/* Search */}
           <div className="relative flex-1 max-w-sm">
             <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"
+              size={16}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#525252]"
             />
             <input
               type="text"
-              placeholder="搜索项目..."
+              placeholder="grep project..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-[#111113] border border-white/[0.06] rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b8ff5]/30 focus:border-[#5b8ff5]/30 transition-all"
+              className="w-full pl-11 pr-4 py-3 bg-[#1a1a1a] border border-[#2a2a2a] rounded text-white placeholder-[#525252] font-mono text-sm focus:outline-none focus:border-[#22c55e] transition-colors"
             />
           </div>
 
@@ -68,10 +68,10 @@ export default function Projects() {
               <button
                 key={status}
                 onClick={() => setStatusFilter(status)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
+                className={`px-4 py-2.5 rounded text-sm font-mono transition-colors ${
                   statusFilter === status
-                    ? 'bg-gradient-to-r from-[#5b8ff5] to-[#3b82f6] text-white shadow-lg shadow-[#5b8ff5]/25'
-                    : 'bg-[#111113] text-zinc-400 hover:text-white hover:bg-[#161618] border border-white/[0.06]'
+                    ? 'bg-[#22c55e] text-[#0c0c0c]'
+                    : 'bg-[#1a1a1a] text-[#737373] hover:text-white border border-[#2a2a2a]'
                 }`}
               >
                 {label}
@@ -88,7 +88,7 @@ export default function Projects() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1a1a1a] border border-[#1a1a1a]"
             >
               {filteredProjects.map((project, index) => (
                 <motion.div
@@ -96,45 +96,36 @@ export default function Projects() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  whileHover={{ y: -6 }}
-                  className="group relative rounded-2xl overflow-hidden card-glow"
+                  whileHover={{ y: -4 }}
+                  className="group bg-[#0c0c0c] hover:bg-[#111111] transition-colors"
                 >
-                  {/* Project image */}
-                  <div className="aspect-video bg-gradient-to-br from-[#5b8ff5] via-[#3b82f6] to-[#06b6d4] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-white/15 text-7xl font-bold group-hover:scale-110 transition-transform duration-500">
-                        {project.title.charAt(0)}
-                      </span>
-                    </div>
-                    {/* Hover gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-
                   {/* Content */}
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-semibold text-white group-hover:text-[#5b8ff5] transition-colors">
-                        {project.title}
-                      </h3>
+                      <div className="flex items-center gap-3">
+                        <Folder size={20} className="text-[#525252]" />
+                        <h3 className="text-xl font-semibold text-white group-hover:text-[#22c55e] transition-colors">
+                          {project.title}
+                        </h3>
+                      </div>
                       <span
-                        className={`px-2.5 py-1 text-xs rounded-full font-medium ${
+                        className={`px-2.5 py-1 text-xs rounded font-mono ${
                           project.status === 'completed'
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                            ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20'
                             : project.status === 'developing'
-                            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                            : 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
+                            ? 'bg-[#fbbf24]/10 text-[#fbbf24] border border-[#fbbf24]/20'
+                            : 'bg-[#525252]/10 text-[#525252] border border-[#525252]/20'
                         }`}
                       >
                         {project.status === 'completed'
-                          ? '已完成'
+                          ? '● completed'
                           : project.status === 'developing'
-                          ? '开发中'
-                          : '已归档'}
+                          ? '◐ developing'
+                          : '○ archived'}
                       </span>
                     </div>
 
-                    <p className="text-zinc-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-[#737373] text-sm leading-relaxed mb-4 line-clamp-2">
                       {project.description}
                     </p>
 
@@ -142,23 +133,23 @@ export default function Projects() {
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1.5 bg-white/[0.04] text-zinc-400 text-xs rounded-full font-medium border border-white/[0.06]"
+                          className="px-3 py-1.5 bg-[#1a1a1a] text-[#737373] text-xs font-mono border border-[#222222]"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 font-mono text-sm">
                       {project.demoUrl && (
                         <a
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-[#5b8ff5] hover:text-[#3b82f6] text-sm font-medium transition-colors"
+                          className="flex items-center gap-1.5 text-[#22c55e] hover:text-[#4ade80] transition-colors"
                         >
-                          <ExternalLink size={16} />
-                          演示
+                          <ExternalLink size={14} />
+                          demo
                         </a>
                       )}
                       {project.sourceUrl && (
@@ -166,10 +157,10 @@ export default function Projects() {
                           href={project.sourceUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-zinc-400 hover:text-white text-sm font-medium transition-colors"
+                          className="flex items-center gap-1.5 text-[#737373] hover:text-white transition-colors"
                         >
-                          <Github size={16} />
-                          源码
+                          <Github size={14} />
+                          source
                         </a>
                       )}
                     </div>
@@ -183,9 +174,11 @@ export default function Projects() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-center py-20"
+              className="text-center py-20 border border-[#1a1a1a] bg-[#0c0c0c]"
             >
-              <p className="text-zinc-500">没有找到匹配的项目</p>
+              <p className="font-mono text-[#525252]">
+                <span className="text-[#ff5f56]">error</span>: no matching projects found
+              </p>
             </motion.div>
           )}
         </AnimatePresence>

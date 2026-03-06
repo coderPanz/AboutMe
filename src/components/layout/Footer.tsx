@@ -1,72 +1,69 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { Github, Mail } from 'lucide-react'
 import profile from '@/data/profile.json'
-
-const socialLinks = [
-  { key: 'github', icon: Github, label: 'GitHub' },
-  { key: 'linkedin', icon: Linkedin, label: 'LinkedIn' },
-  { key: 'twitter', icon: Twitter, label: 'Twitter' },
-]
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative border-t border-white/5">
-      {/* Gradient fade effect */}
-      <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
+    <footer className="relative border-t border-[#1a1a1a] bg-[#0c0c0c]">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex flex-col items-center gap-8">
-          {/* Logo */}
+          {/* Terminal prompt style */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-xl font-semibold text-white"
+            className="font-mono text-sm"
           >
-            About<span className="gradient-text">Me</span>
+            <span className="text-[#737373]">
+              <span className="text-[#22c55e]">{profile.name}@portfolio</span>
+              <span className="mx-2">:</span>
+              <span className="text-[#22d3ee]">~</span>
+              <span className="mx-2 text-[#737373]">exit</span>
+            </span>
           </motion.div>
 
-          {/* Social Links */}
+          {/* Social Links - Terminal style */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="flex items-center gap-6"
+            className="flex items-center gap-4 font-mono text-sm"
           >
-            {socialLinks.map((social) => {
-              const Icon = social.icon
-              const url = profile.social[social.key as keyof typeof profile.social]
-              if (!url) return null
-
-              return (
-                <a
-                  key={social.key}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative p-2 text-zinc-400 hover:text-white transition-colors"
-                  aria-label={social.label}
-                >
-                  <Icon size={20} />
-                  <span className="absolute inset-0 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              )
-            })}
-            <a
-              href={`mailto:${profile.social.email}`}
-              className="group relative p-2 text-zinc-400 hover:text-white transition-colors"
-              aria-label="Email"
-            >
-              <Mail size={20} />
-              <span className="absolute inset-0 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </a>
+            {profile.social.github && (
+              <a
+                href={profile.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-2 text-[#737373] hover:text-[#22c55e] transition-colors border border-[#1a1a1a] hover:border-[#22c55e]"
+                aria-label="GitHub"
+              >
+                <Github size={16} />
+                <span>github</span>
+              </a>
+            )}
+            {profile.social.email && (
+              <a
+                href={`mailto:${profile.social.email}`}
+                className="flex items-center gap-2 px-3 py-2 text-[#737373] hover:text-[#22c55e] transition-colors border border-[#1a1a1a] hover:border-[#22c55e]"
+                aria-label="Email"
+              >
+                <Mail size={16} />
+                <span>email</span>
+              </a>
+            )}
           </motion.div>
 
-          {/* Divider */}
-          <div className="w-full max-w-xs divider" />
+          {/* Divider - Terminal style */}
+          <div className="w-full max-w-md">
+            <div className="font-mono text-xs text-[#525252] flex items-center gap-2">
+              <span>─</span>
+              <span className="text-[#fbbf24]">○</span>
+              <span>─</span>
+            </div>
+          </div>
 
           {/* Copyright */}
           <motion.p
@@ -74,9 +71,9 @@ export default function Footer() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-sm text-zinc-500"
+            className="font-mono text-xs text-[#525252]"
           >
-            © {currentYear} {profile.name}. All rights reserved.
+            <span className="text-[#22c55e]">©</span> {currentYear} {profile.name} — MIT License
           </motion.p>
         </div>
       </div>

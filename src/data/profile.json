@@ -1,8 +1,8 @@
 {
-  "name": "潘",
-  "title": "AI 前端开发工程师",
+  "name": "北漂螺丝钉",
+  "title": "半吊子AI+前端开发工程师",
   "avatar": "/avatar.jpg",
-  "bio": "关于我的一些想法都在这里",
+    "bio": "人不一定往上走，也可以四处走走～",
   "skills": [
     { "name": "React", "level": 90, "category": "frontend" },
     { "name": "TypeScript", "level": 85, "category": "frontend" },
