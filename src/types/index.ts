@@ -11,7 +11,7 @@ export interface Profile {
 export interface Skill {
   name: string
   level: number // 1-100
-  category: 'frontend' | 'backend' | 'tools' | 'other'
+  category: "frontend" | "backend" | "tools" | "other"
 }
 
 export interface SocialLinks {
@@ -33,7 +33,7 @@ export interface Project {
   demoUrl?: string
   sourceUrl?: string
   featured: boolean
-  status: 'developing' | 'completed' | 'archived'
+  status: "developing" | "completed" | "archived"
 }
 
 // 博客文章

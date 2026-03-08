@@ -25,7 +25,10 @@ export interface BlogPost {
 /**
  * 解析 YAML frontmatter（轻量实现，不依赖 gray-matter）
  */
-function parseFrontmatter(markdown: string): { frontmatter: Record<string, unknown>; content: string } {
+function parseFrontmatter(markdown: string): {
+  frontmatter: Record<string, unknown>
+  content: string
+} {
   const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
 
   if (!match) {
@@ -36,8 +39,8 @@ function parseFrontmatter(markdown: string): { frontmatter: Record<string, unkno
   const frontmatter: Record<string, unknown> = {}
 
   // 解析 YAML 格式的 frontmatter
-  const lines = frontmatterStr.split('\n')
-  let currentKey = ''
+  const lines = frontmatterStr.split("\n")
+  let currentKey = ""
 
   for (const line of lines) {
     // 匹配 key: value 格式
@@ -47,27 +50,30 @@ function parseFrontmatter(markdown: string): { frontmatter: Record<string, unkno
       currentKey = key
 
       // 处理数组类型（tags）
-      if (value === '') {
+      if (value === "") {
         frontmatter[key] = []
-      } else if (value.startsWith('[') && value.endsWith(']')) {
+      } else if (value.startsWith("[") && value.endsWith("]")) {
         // 单行数组格式: [item1, item2]
         frontmatter[key] = value
           .slice(1, -1)
-          .split(',')
-          .map(s => s.trim().replace(/^['"]|['"]$/g, ''))
-      } else if (value === 'true' || value === 'false') {
+          .split(",")
+          .map(s => s.trim().replace(/^['"]|['"]$/g, ""))
+      } else if (value === "true" || value === "false") {
         // 处理布尔值
-        frontmatter[key] = value === 'true'
-      } else if (!isNaN(Number(value)) && value.trim() !== '') {
+        frontmatter[key] = value === "true"
+      } else if (!isNaN(Number(value)) && value.trim() !== "") {
         // 处理数字类型
         frontmatter[key] = Number(value)
       } else {
         // 普通值，移除引号
-        frontmatter[key] = value.replace(/^['"]|['"]$/g, '')
+        frontmatter[key] = value.replace(/^['"]|['"]$/g, "")
       }
-    } else if (line.startsWith('  - ') && currentKey) {
+    } else if (line.startsWith("  - ") && currentKey) {
       // 多行数组项
-      const arrayValue = line.slice(4).trim().replace(/^['"]|['"]$/g, '')
+      const arrayValue = line
+        .slice(4)
+        .trim()
+        .replace(/^['"]|['"]$/g, "")
       ;(frontmatter[currentKey] as string[]).push(arrayValue)
     }
   }

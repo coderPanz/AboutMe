@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-master": {
+      "source": "lyfe2025/lyfes-coding-skills",
+      "sourceType": "github",
+      "computedHash": "01e05ea91282b16affd8e927a8723840611e77066eaca80a0eddbc73eab53faa"
+    },
+    "skill-creator": {
+      "source": "lyfe2025/lyfes-coding-skills",
+      "sourceType": "github",
+      "computedHash": "3ef50dd25577f3af4ba1972e468be400200920393bdf9d6857150118b5451b48"
+    }
+  }
+}

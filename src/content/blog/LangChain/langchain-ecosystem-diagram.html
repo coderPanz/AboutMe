@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LangChain 生态定位架构图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: white;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 60px;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: #212529;
+      margin-bottom: 12px;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6c757d;
+      margin-bottom: 50px;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .diagram-container {
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .layer {
+      border-radius: 6px;
+      padding: 28px 32px;
+      margin: 16px 0;
+      border: 1px solid #dee2e6;
+      transition: border-color 0.2s ease;
+    }
+
+    .layer:hover {
+      border-color: #adb5bd;
+    }
+
+    .layer-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.2px;
+    }
+
+    .layer-icon {
+      font-size: 20px;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .layer-features {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .layer-features li {
+      padding: 6px 0;
+      padding-left: 26px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #495057;
+    }
+
+    .layer-features li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #6c757d;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 20px;
+      color: #adb5bd;
+      margin: 8px 0;
+      line-height: 1;
+    }
+
+    .layer-deep {
+      background-color: #f8f9fa;
+    }
+
+    .layer-langchain {
+      background-color: #f8f9fa;
+    }
+
+    .layer-langgraph {
+      background-color: #f8f9fa;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .download-btn {
+      background: white;
+      color: #495057;
+      border: 1px solid #dee2e6;
+      padding: 12px 32px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .download-btn:hover {
+      background: #f8f9fa;
+      border-color: #adb5bd;
+      color: #212529;
+    }
+
+    .download-btn:active {
+      background: #e9ecef;
+    }
+
+    .download-icon {
+      font-size: 16px;
+    }
+
+    #canvas {
+      display: none;
+    }
+
+    .tips {
+      margin-top: 40px;
+      padding: 20px 24px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+    }
+
+    .tips-title {
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 12px;
+      font-size: 14px;
+      letter-spacing: -0.2px;
+    }
+
+    .tips-content {
+      color: #495057;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .tips-content strong {
+      color: #212529;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LangChain 生态定位</h1>
+    <p class="subtitle">根据需求复杂度选择合适的工具层次</p>
+
+    <div class="diagram-container" id="diagram">
+      <!-- Deep Agents -->
+      <div class="layer layer-deep">
+        <div class="layer-title">
+          <svg class="layer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          Deep Agents（推荐起点）
+        </div>
+        <ul class="layer-features">
+          <li>开箱即用的完整 Agent 框架</li>
+          <li>自动压缩长对话、虚拟文件系统</li>
+          <li>支持子 Agent 生成和上下文隔离</li>
+        </ul>
+      </div>
+
+      <div class="arrow">↓</div>
+
+      <!-- LangChain -->
+      <div class="layer layer-langchain">
+        <div class="layer-title">
+          <svg class="layer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          </svg>
+          LangChain（本框架）
+        </div>
+        <ul class="layer-features">
+          <li>快速构建 Agent 和自主应用</li>
+          <li>灵活的上下文工程能力</li>
+          <li>基于 LangGraph 构建</li>
+        </ul>
+      </div>
+
+      <div class="arrow">↓</div>
+
+      <!-- LangGraph -->
+      <div class="layer layer-langgraph">
+        <div class="layer-title">
+          <svg class="layer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          LangGraph（底层编排框架）
+        </div>
+        <ul class="layer-features">
+          <li>低级别 Agent 编排和运行时</li>
+          <li>支持确定性和 Agent 工作流混合</li>
+          <li>需要深度定制时使用</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="download-btn" onclick="downloadDiagram()">
+        <span class="download-icon">⬇</span>
+        下载架构图
+      </button>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">选择建议</div>
+      <div class="tips-content">
+        <strong>快速构建 Agent</strong> → 使用 LangChain<br>
+        <strong>需要现代功能（自动压缩对话、子 Agent）</strong> → 使用 Deep Agents<br>
+        <strong>高级定制需求</strong> → 使用 LangGraph
+      </div>
+    </div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    function downloadDiagram() {
+      const diagram = document.getElementById('diagram');
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // 设置画布大小
+      canvas.width = 900;
+      canvas.height = 680;
+
+      // 绘制白色背景
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const padding = 60;
+      const cardWidth = canvas.width - padding * 2;
+
+      // 绘制标题
+      ctx.fillStyle = '#212529';
+      ctx.font = '600 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+      ctx.textAlign = 'center';
+      ctx.fillText('LangChain 生态定位', canvas.width / 2, padding + 10);
+
+      // 绘制副标题
+      ctx.fillStyle = '#6c757d';
+      ctx.font = '400 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+      ctx.fillText('根据需求复杂度选择合适的工具层次', canvas.width / 2, padding + 35);
+
+      // 层级配置
+      const layers = [
+        {
+          icon: 'layers',
+          title: 'Deep Agents（推荐起点）',
+          features: ['开箱即用的完整 Agent 框架', '自动压缩长对话、虚拟文件系统', '支持子 Agent 生成和上下文隔离'],
+          y: padding + 80
+        },
+        {
+          icon: 'bolt',
+          title: 'LangChain（本框架）',
+          features: ['快速构建 Agent 和自主应用', '灵活的上下文工程能力', '基于 LangGraph 构建'],
+          y: padding + 220
+        },
+        {
+          icon: 'settings',
+          title: 'LangGraph（底层编排框架）',
+          features: ['低级别 Agent 编排和运行时', '支持确定性和 Agent 工作流混合', '需要深度定制时使用'],
+          y: padding + 360
+        }
+      ];
+
+      layers.forEach((layer, index) => {
+        const layerX = padding + 40;
+        const layerY = layer.y;
+        const layerWidth = cardWidth - 80;
+        const layerHeight = 100;
+
+        // 绘制边框
+        ctx.strokeStyle = '#dee2e6';
+        ctx.lineWidth = 1;
+        roundRect(ctx, layerX, layerY, layerWidth, layerHeight, 6);
+        ctx.stroke();
+
+        // 绘制标题
+        ctx.fillStyle = '#212529';
+        ctx.font = '600 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.textAlign = 'left';
+        ctx.fillText(layer.title, layerX + 36, layerY + 32);
+
+        // 绘制特性列表
+        ctx.fillStyle = '#495057';
+        ctx.font = '400 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        layer.features.forEach((feature, i) => {
+          // 绘制小圆点
+          ctx.beginPath();
+          ctx.arc(layerX + 29, layerY + 62 + i * 24, 3, 0, Math.PI * 2);
+          ctx.fillStyle = '#6c757d';
+          ctx.fill();
+          
+          // 绘制文字
+          ctx.fillStyle = '#495057';
+          ctx.fillText(feature, layerX + 38, layerY + 67 + i * 24);
+        });
+
+        // 绘制箭头（除了最后一个）
+        if (index < layers.length - 1) {
+          ctx.fillStyle = '#adb5bd';
+          ctx.font = '20px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText('↓', canvas.width / 2, layerY + 125);
+        }
+      });
+
+      // 转换为图片并下载
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = 'langchain-ecosystem-diagram.png';
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+  </script>
+</body>
+</html>

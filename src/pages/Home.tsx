@@ -46,7 +46,7 @@ export default function Home() {
                 linear-gradient(rgba(74, 222, 128, 0.3) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(74, 222, 128, 0.3) 1px, transparent 1px)
               `,
-              backgroundSize: '40px 40px',
+              backgroundSize: "40px 40px",
             }}
           />
         </div>
@@ -83,9 +83,13 @@ export default function Home() {
                     <div className="terminal-dot terminal-dot--red" />
                     <div className="terminal-dot terminal-dot--yellow" />
                     <div className="terminal-dot terminal-dot--green" />
-                    <span className="ml-4 font-mono text-sm text-[#737373]">whoami --title</span>
+                    <span className="ml-4 font-mono text-sm text-[#737373]">
+                      whoami --title
+                    </span>
                   </div>
-                  <span className="font-mono text-sm text-[#525252]">ready</span>
+                  <span className="font-mono text-sm text-[#525252]">
+                    ready
+                  </span>
                 </div>
                 {/* Content */}
                 <div className="p-6 md:p-8 bg-[#0c0c0c]">
@@ -100,7 +104,9 @@ export default function Home() {
                   <div className="font-mono text-sm flex flex-wrap items-center gap-x-3 gap-y-2 mb-4 pt-4 border-t border-[#1a1a1a]">
                     <span className="text-[#22c55e]">$</span>
                     <span className="text-white">skills:</span>
-                    <span className="text-[#fbbf24]">{profile.skills.length}</span>
+                    <span className="text-[#fbbf24]">
+                      {profile.skills.length}
+                    </span>
                     <span className="text-[#737373]">--list</span>
                     <span className="flex items-center gap-1.5 ml-1">
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#2a2a2a] text-white font-mono text-xs border border-[#333]">
@@ -114,7 +120,8 @@ export default function Home() {
                     </span>
                   </div>
                   <p className="font-mono text-xs text-[#525252]">
-                    <span className="text-[#22c55e]">→</span> 向下滚动查看技能列表与项目
+                    <span className="text-[#22c55e]">→</span>{" "}
+                    向下滚动查看技能列表与项目
                   </p>
                 </div>
               </div>
@@ -177,7 +184,9 @@ export default function Home() {
             className="mb-16"
           >
             <div className="mb-8">
-              <h2 className="editorial-display text-4xl md:text-5xl text-white">精选博客</h2>
+              <h2 className="editorial-display text-4xl md:text-5xl text-white">
+                精选博客
+              </h2>
             </div>
           </motion.div>
 
@@ -196,7 +205,8 @@ export default function Home() {
                 >
                   {/* Meta - terminal comment style */}
                   <div className="font-mono text-xs text-[#525252] mb-4">
-                    <span className="text-[#22c55e]">//</span> {post.date} · {post.readTime} min read
+                    <span className="text-[#22c55e]">//</span> {post.date} ·{" "}
+                    {post.readTime} min read
                   </div>
 
                   {/* Title */}
@@ -257,7 +267,9 @@ export default function Home() {
             className="mb-16"
           >
             <div className="mb-8">
-              <h2 className="editorial-display text-4xl md:text-5xl text-white">精选项目</h2>
+              <h2 className="editorial-display text-4xl md:text-5xl text-white">
+                精选项目
+              </h2>
             </div>
           </motion.div>
 
@@ -277,7 +289,9 @@ export default function Home() {
                   <span className="font-mono text-sm text-[#737373]">
                     {index + 1}.
                   </span>
-                  <span className="font-mono text-xs text-[#22c55e]">● active</span>
+                  <span className="font-mono text-xs text-[#22c55e]">
+                    ● active
+                  </span>
                 </div>
 
                 {/* Project content */}
@@ -305,7 +319,10 @@ export default function Home() {
                 {/* Project footer */}
                 <div className="px-6 py-4 border-t border-[#1a1a1a]">
                   <span className="font-mono text-xs text-[#525252] group-hover:text-[#22c55e] transition-colors flex items-center gap-2">
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      size={14}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
                     view-project
                   </span>
                 </div>
@@ -342,8 +359,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="mb-16"
-          >
-          </motion.div>
+          ></motion.div>
           {/* Skills grid - npm package style */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -352,7 +368,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-px bg-[#1a1a1a] border border-[#1a1a1a]"
           >
-            {profile.skills.slice(0, 18).map((skill) => (
+            {profile.skills.slice(0, 18).map(skill => (
               <div
                 key={skill.name}
                 className="p-4 bg-[#0c0c0c] font-mono text-sm text-[#737373] hover:bg-[#111111] hover:text-[#22c55e] transition-colors cursor-default"
