@@ -1,384 +1,337 @@
 import { motion } from "framer-motion"
-import { ArrowRight, Star, Clock } from "lucide-react"
+import { 
+  ArrowRight, 
+  Star, 
+  Clock, 
+  Code2, 
+  Briefcase,
+  Calendar,
+  ExternalLink,
+  Github,
+  Zap
+} from "lucide-react"
 import { Link } from "react-router-dom"
 import profile from "@/data/profile.json"
 import projects from "@/data/projects.json"
 import { blogPosts } from "@/data/blog"
+import TypewriterTitle from "@/components/common/TypewriterTitle"
+import SkillRadar from "@/components/common/SkillRadar"
+import SubscribeCTA from "@/components/common/SubscribeCTA"
+import BackgroundTexture from "@/components/common/BackgroundTexture"
+import ScrollIndicator from "@/components/common/ScrollIndicator"
 
 const featuredProjects = projects.filter(p => p.featured).slice(0, 3)
 const featuredBlogs = blogPosts.slice(0, 3)
 
-// Animation variants - slower, more elegant
+// 动画变体
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" as const }
+  },
+}
+
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.3,
-    },
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 }
   },
-} as const
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-} as const
+}
 
 export default function Home() {
   return (
-    <div className="bg-[#0c0c0c] min-h-screen">
-      {/* Hero Section - Editorial + Terminal */}
-      <section className="relative min-h-screen flex items-center">
-        {/* Subtle grid - terminal aesthetic */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(74, 222, 128, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 222, 128, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: "40px 40px",
-            }}
-          />
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 py-32 relative z-10">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Terminal-style meta info - Editorial placement */}
-            <motion.div variants={fadeUp} className="mb-16">
-              <div className="flex items-center gap-4 text-sm font-mono">
-                <span className="text-[#737373]">~/portfolio</span>
-                <span className="text-[#525252]">git:main</span>
-                <span className="text-[#22c55e]">●</span>
-              </div>
-            </motion.div>
-
-            {/* Editorial large title with terminal accent */}
-            <motion.div variants={fadeUp} className="mb-12">
-              <h1 className="editorial-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white leading-[0.95]">
-                <span>I'm </span>
-                <span className="gradient-text">{profile.name}</span>
-              </h1>
-            </motion.div>
-
-            {/* Terminal-style title window (skills --list style) */}
-            <motion.div variants={fadeUp} className="mb-8 max-w-4xl">
-              <div className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a]">
-                {/* Window header */}
-                <div className="relative z-10 flex items-center justify-between px-4 py-3 bg-[#1a1a1a] border-b border-[#222222]">
-                  <div className="flex items-center gap-2">
-                    <div className="terminal-dot terminal-dot--red" />
-                    <div className="terminal-dot terminal-dot--yellow" />
-                    <div className="terminal-dot terminal-dot--green" />
-                    <span className="ml-4 font-mono text-sm text-[#737373]">
-                      whoami --title
-                    </span>
-                  </div>
-                  <span className="font-mono text-sm text-[#525252]">
-                    ready
-                  </span>
-                </div>
-                {/* Content */}
-                <div className="p-6 md:p-8 bg-[#0c0c0c]">
-                  <h2 className="font-mono text-xl md:text-2xl text-white mb-2">
-                    <span className="text-[#fbbf24]">&gt;</span>
-                    <span className="text-[#a3a3a3]"> whoami </span>
-                    <span className="text-white">{profile.title}</span>
-                  </h2>
-                  <p className="font-mono text-sm text-[#525252] mb-6">
-                    // {profile.bio}
-                  </p>
-                  <div className="font-mono text-sm flex flex-wrap items-center gap-x-3 gap-y-2 mb-4 pt-4 border-t border-[#1a1a1a]">
-                    <span className="text-[#22c55e]">$</span>
-                    <span className="text-white">skills:</span>
-                    <span className="text-[#fbbf24]">
-                      {profile.skills.length}
-                    </span>
-                    <span className="text-[#737373]">--list</span>
-                    <span className="flex items-center gap-1.5 ml-1">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#2a2a2a] text-white font-mono text-xs border border-[#333]">
-                        <Star size={12} className="fill-white" />
-                        frontend
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#1a1a1a] text-[#737373] font-mono text-xs border border-[#222]">
-                        <Clock size={12} />
-                        tools
-                      </span>
-                    </span>
-                  </div>
-                  <p className="font-mono text-xs text-[#525252]">
-                    <span className="text-[#22c55e]">→</span>{" "}
-                    向下滚动查看技能列表与项目
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Bio - Editorial style, clean and spacious */}
-            <motion.p
-              variants={fadeUp}
-              className="text-xl md:text-2xl text-[#a3a3a3] max-w-3xl leading-relaxed mb-16 font-light"
+    <div className="min-h-screen bg-[#F9FAFB] relative">
+      {/* 背景纹理 */}
+      <BackgroundTexture />
+      
+      {/* Hero Section */}
+      <section className="relative min-h-[85vh] flex items-start justify-center pt-24 lg:pt-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 lg:py-12 relative z-10 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* 左侧内容 */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="text-center lg:text-left"
             >
-              {profile.bio}
-            </motion.p>
+              {/* 标签 */}
+              <motion.div variants={fadeUp} className="mb-6">
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#ECFDF5] text-[#059669] text-sm font-medium rounded-full border border-[#10B981]/20">
+                  <Zap size={14} className="text-[#10B981]" />
+                  半吊子AI + 前端开发工程师
+                </span>
+              </motion.div>
 
-            {/* CTA - Terminal command style */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-6">
-              <Link
-                to="/projects"
-                className="btn-primary inline-flex items-center gap-3 group"
-              >
-                <span className="text-[#0c0c0c]">~/explore-projects</span>
-                <ArrowRight
-                  size={18}
-                  className="group-hover:translate-x-1 transition-transform text-[#0c0c0c]"
-                />
-              </Link>
-              <Link
-                to="/contact"
-                className="btn-secondary inline-flex items-center gap-2 font-mono"
-              >
-                <span className="text-[#22c55e]">$</span>
-                <span>contact</span>
-              </Link>
+              {/* 主标题 - 打字机效果 */}
+              <motion.div variants={fadeUp} className="mb-6">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight tracking-tight">
+                  <TypewriterTitle text="北漂螺丝钉" delay={300} speed={120} />
+                </h1>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5 }}
+                  className="mt-4 text-lg text-[#6B7280] font-light tracking-wide"
+                >
+                  人不一定往上走，也可以四处走走
+                </motion.p>
+              </motion.div>
+
+              {/* 关于我卡片 - 补充具体经历 */}
+              <motion.div variants={fadeUp} className="mb-8">
+                <div className="bg-white/80 backdrop-blur rounded-2xl border border-[#E5E7EB] p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#10B981] to-[#3B82F6] flex items-center justify-center flex-shrink-0">
+                      <Star size={24} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-[#1F2937] leading-relaxed mb-3">
+                        {profile.bio}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
+                        <span className="flex items-center gap-1.5">
+                          <Briefcase size={14} className="text-[#3B82F6]" />
+                          5年+ 开发经验
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Code2 size={14} className="text-[#10B981]" />
+                          React / Vue / AI
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Github size={14} className="text-[#6B7280]" />
+                          10+ 开源项目
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* CTA 按钮 */}
+              <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <Link to="/projects">
+                  <motion.button
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group px-6 py-3.5 bg-[#10B981] text-white font-semibold rounded-xl flex items-center gap-2 shadow-lg shadow-[#10B981]/20 hover:shadow-xl hover:shadow-[#10B981]/30 transition-all"
+                  >
+                    <span>查看项目</span>
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
+                <Link to="/blog">
+                  <motion.button
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group px-6 py-3.5 bg-white text-[#1F2937] font-semibold rounded-xl border border-[#E5E7EB] flex items-center gap-2 hover:border-[#10B981] hover:text-[#10B981] hover:bg-[#ECFDF5] transition-all"
+                  >
+                    <span>阅读博客</span>
+                    <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
+              </motion.div>
             </motion.div>
-          </motion.div>
+
+            {/* 右侧 - 技能雷达图 */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="hidden lg:flex items-center justify-center"
+            >
+              <SkillRadar skills={profile.skills} size={400} />
+            </motion.div>
+          </div>
         </div>
 
-        {/* Scroll indicator - minimal terminal style */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <div className="flex flex-col items-center gap-3 text-[#525252]">
-            <span className="font-mono text-xs tracking-widest">SCROLL</span>
-            <div className="w-px h-12 bg-gradient-to-b from-[#525252] to-transparent" />
-          </div>
-        </motion.div>
+        {/* 向下滚动指示 - 带横线分割和流水粒子特效 */}
+        <ScrollIndicator />
       </section>
 
-      {/* Featured Blogs - Terminal window style */}
-      <section className="py-24 md:py-32 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto px-6">
-          {/* Section header - Terminal style */}
+      {/* 最新博客 Section */}
+      <section className="py-20 px-4 sm:px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-16"
+            className="flex items-end justify-between mb-10"
           >
-            <div className="mb-8">
-              <h2 className="editorial-display text-4xl md:text-5xl text-white">
-                精选博客
-              </h2>
+            <div>
+              <h2 className="text-3xl font-bold text-[#1F2937] mb-2">最新博客</h2>
+              <p className="text-[#6B7280]">技术心得与学习笔记</p>
             </div>
+            <Link to="/blog" className="hidden sm:flex items-center gap-1 text-[#3B82F6] font-medium hover:gap-2 transition-all">
+              查看全部 <ArrowRight size={16} />
+            </Link>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#1a1a1a] border border-[#1a1a1a]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredBlogs.map((post, index) => (
               <motion.article
                 key={post.slug}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link
-                  to={`/blog/${post.slug}`}
-                  className="group block p-8 bg-[#0c0c0c] hover:bg-[#111111] transition-colors h-full"
-                >
-                  {/* Meta - terminal comment style */}
-                  <div className="font-mono text-xs text-[#525252] mb-4">
-                    <span className="text-[#22c55e]">//</span> {post.date} ·{" "}
-                    {post.readTime} min read
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-semibold text-white mb-4 group-hover:text-[#22c55e] transition-colors">
-                    {post.title}
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="text-[#737373] text-sm leading-relaxed mb-6 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-
-                  {/* Tags - terminal style */}
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.slice(0, 3).map(tag => (
-                      <span
-                        key={tag}
-                        className="font-mono text-xs px-2 py-1 bg-[#1a1a1a] text-[#a3a3a3] border border-[#222222]"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
+                <Link to={`/blog/${post.slug}`}>
+                  <motion.div
+                    whileHover={{ y: -5 }}
+                    className="group bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden hover:shadow-lg hover:shadow-[#10B981]/5 hover:border-[#10B981]/30 transition-all h-full flex flex-col"
+                  >
+                    {/* 缩略图占位 */}
+                    <div className="h-40 bg-gradient-to-br from-[#ECFDF5] to-[#EFF6FF] flex items-center justify-center">
+                      <span className="text-4xl font-bold text-[#10B981]/30">{post.title?.charAt(0) || '?'}</span>
+                    </div>
+                    
+                    <div className="p-5 flex-1 flex flex-col">
+                      <div className="flex items-center gap-3 text-xs text-[#9CA3AF] mb-3">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={12} />
+                          {post.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock size={12} />
+                          {post.readTime} min
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-lg font-bold text-[#1F2937] mb-2 group-hover:text-[#10B981] transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
+                      
+                      <p className="text-sm text-[#6B7280] line-clamp-2 mb-4 flex-1">
+                        {post.excerpt}
+                      </p>
+                      
+                      <div className="flex items-center gap-2">
+                        {(post.tags || []).slice(0, 2).map((tag, idx) => (
+                          <span 
+                            key={tag} 
+                            className={`text-xs px-2.5 py-1 rounded-full ${
+                              idx === 0 ? 'bg-[#ECFDF5] text-[#059669]' : 
+                              'bg-[#EFF6FF] text-[#2563EB]'
+                            }`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
                 </Link>
               </motion.article>
             ))}
           </div>
-
-          {/* View all link - terminal style */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="mt-12 text-center"
-          >
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 font-mono text-[#22c55e] hover:text-[#4ade80] transition-colors"
-            >
-              <span>$</span>
-              <span>ls -la ./blog</span>
-              <ArrowRight size={16} className="group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
         </div>
       </section>
 
-      {/* Featured Projects - Editorial card style */}
-      <section className="py-24 md:py-32 border-t border-[#1a1a1a] bg-[#0c0c0c]">
-        <div className="max-w-6xl mx-auto px-6">
-          {/* Section header - Editorial style */}
+      {/* 精选项目 Section */}
+      <section className="py-20 px-4 sm:px-6 bg-white relative z-10">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-16"
+            className="flex items-end justify-between mb-10"
           >
-            <div className="mb-8">
-              <h2 className="editorial-display text-4xl md:text-5xl text-white">
-                精选项目
-              </h2>
+            <div>
+              <h2 className="text-3xl font-bold text-[#1F2937] mb-2">精选项目</h2>
+              <p className="text-[#6B7280]">开源作品与实践项目</p>
             </div>
+            <Link to="/projects" className="hidden sm:flex items-center gap-1 text-[#3B82F6] font-medium hover:gap-2 transition-all">
+              查看全部 <ArrowRight size={16} />
+            </Link>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="group card-glow"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                {/* Project header - terminal style */}
-                <div className="px-6 py-4 bg-[#1a1a1a] border-b border-[#222222] flex items-center justify-between">
-                  <span className="font-mono text-sm text-[#737373]">
-                    {index + 1}.
-                  </span>
-                  <span className="font-mono text-xs text-[#22c55e]">
-                    ● active
-                  </span>
-                </div>
-
-                {/* Project content */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-white mb-3 group-hover:text-[#22c55e] transition-colors">
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="group bg-[#F9FAFB] rounded-2xl border border-[#E5E7EB] p-6 hover:shadow-lg hover:shadow-[#10B981]/5 hover:border-[#10B981]/30 transition-all h-full flex flex-col"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] flex items-center justify-center">
+                      <span className="text-xl font-bold text-[#10B981]">{project.title?.charAt(0) || '?'}</span>
+                    </div>
+                    <span className={`text-xs px-2.5 py-1 rounded-full ${
+                      project.status === 'completed' ? 'bg-[#ECFDF5] text-[#059669]' : 
+                      'bg-[#FFFBEB] text-[#D97706]'
+                    }`}>
+                      {project.status === 'completed' ? '已完成' : '开发中'}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-lg font-bold text-[#1F2937] mb-2 group-hover:text-[#10B981] transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-[#a3a3a3] text-sm leading-relaxed mb-6">
+                  
+                  <p className="text-sm text-[#6B7280] line-clamp-2 mb-4 flex-1">
                     {project.description}
                   </p>
-
-                  {/* Tech stack - terminal package style */}
+                  
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.techStack.slice(0, 4).map(tech => (
-                      <span
-                        key={tech}
-                        className="font-mono text-xs px-2 py-1.5 bg-[#111111] text-[#737373] border border-[#1a1a1a]"
+                    {project.techStack.slice(0, 3).map((tech, idx) => (
+                      <span 
+                        key={tech} 
+                        className={`text-xs px-2.5 py-1 rounded-full ${
+                          idx === 0 ? 'bg-white border border-[#E5E7EB] text-[#4B5563]' : 
+                          idx === 1 ? 'bg-[#ECFDF5] text-[#059669]' :
+                          'bg-[#EFF6FF] text-[#2563EB]'
+                        }`}
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                </div>
-
-                {/* Project footer */}
-                <div className="px-6 py-4 border-t border-[#1a1a1a]">
-                  <span className="font-mono text-xs text-[#525252] group-hover:text-[#22c55e] transition-colors flex items-center gap-2">
-                    <ArrowRight
-                      size={14}
-                      className="group-hover:translate-x-1 transition-transform"
-                    />
-                    view-project
-                  </span>
-                </div>
+                  
+                  <div className="flex items-center gap-4 pt-4 border-t border-[#E5E7EB]">
+                    {project.demoUrl && (
+                      <a 
+                        href={project.demoUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium text-[#3B82F6] hover:text-[#10B981] flex items-center gap-1 transition-colors"
+                      >
+                        <ExternalLink size={14} />
+                        演示
+                      </a>
+                    )}
+                    {project.sourceUrl && (
+                      <a 
+                        href={project.sourceUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium text-[#6B7280] hover:text-[#1F2937] flex items-center gap-1 transition-colors"
+                      >
+                        <Github size={14} />
+                        源码
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
-
-          {/* View all link */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="mt-12 text-center"
-          >
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 font-mono text-[#22c55e] hover:text-[#4ade80] transition-colors"
-            >
-              <span>$</span>
-              <span>ls ./projects</span>
-              <ArrowRight size={16} />
-            </Link>
-          </motion.div>
         </div>
       </section>
 
-      {/* Skills section - Terminal package list style */}
-      <section className="py-24 md:py-32 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-16"
-          ></motion.div>
-          {/* Skills grid - npm package style */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-px bg-[#1a1a1a] border border-[#1a1a1a]"
-          >
-            {profile.skills.slice(0, 18).map(skill => (
-              <div
-                key={skill.name}
-                className="p-4 bg-[#0c0c0c] font-mono text-sm text-[#737373] hover:bg-[#111111] hover:text-[#22c55e] transition-colors cursor-default"
-              >
-                <span className="text-[#22c55e]">├─</span> {skill.name}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      {/* 订阅 CTA */}
+      <SubscribeCTA />
     </div>
   )
 }

@@ -1,34 +1,43 @@
 @import "highlight.js/styles/github-dark.css";
 
-/* Markdown 内容样式 */
+/* Markdown 内容样式 - 中性风格 + 薄荷绿点缀 */
 .prose {
-  @apply text-zinc-400 leading-relaxed;
+  @apply text-[#4B5563] leading-relaxed;
 }
 
+/* 标题样式 */
 .prose h1 {
-  @apply text-3xl font-semibold text-white mt-8 mb-4;
+  @apply text-3xl font-bold text-[#1F2937] mt-8 mb-4;
 }
 
 .prose h2 {
-  @apply text-xl font-semibold text-white mt-8 mb-4;
+  @apply text-2xl font-bold text-[#1F2937] mt-8 mb-4 flex items-center gap-2;
+}
+
+.prose h2::before {
+  content: '';
+  @apply w-1 h-6 bg-[#10B981] rounded-full;
 }
 
 .prose h3 {
-  @apply text-lg font-medium text-white mt-6 mb-3;
+  @apply text-lg font-bold text-[#374151] mt-6 mb-3;
 }
 
 .prose h4 {
-  @apply text-base font-medium text-white mt-4 mb-2;
+  @apply text-base font-semibold text-[#4B5563] mt-4 mb-2;
 }
 
+/* 段落 */
 .prose p {
   @apply mb-4 leading-7;
 }
 
+/* 链接 - 蓝色到薄荷绿 */
 .prose a {
-  @apply text-[#5b8ff5] hover:text-[#3b82f6] transition-colors underline underline-offset-2;
+  @apply text-[#3B82F6] hover:text-[#10B981] transition-colors underline underline-offset-2 font-medium;
 }
 
+/* 列表 */
 .prose ul,
 .prose ol {
   @apply mb-4 pl-6;
@@ -38,56 +47,71 @@
   @apply list-disc;
 }
 
+.prose ul li::marker {
+  color: #9CA3AF;
+}
+
 .prose ol {
   @apply list-decimal;
+}
+
+.prose ol li::marker {
+  color: #6B7280;
 }
 
 .prose li {
   @apply mb-2 leading-7;
 }
 
+/* 引用块 - 薄荷绿 */
 .prose blockquote {
-  @apply border-l-4 border-[#5b8ff5]/30 pl-4 my-4 italic text-zinc-500;
+  @apply border-l-4 border-[#10B981] pl-4 my-4 italic bg-[#ECFDF5] py-3 px-4 rounded-r-xl;
 }
 
+/* 行内代码 - 中性色 */
 .prose code:not(pre code) {
-  @apply bg-[#111113] text-[#5b8ff5] px-1.5 py-0.5 rounded text-sm border border-white/[0.06];
+  @apply bg-[#F9FAFB] text-[#1F2937] px-1.5 py-0.5 rounded text-sm font-mono border border-[#F3F4F6];
 }
 
+/* CLI 风格代码块 - 在 MarkdownRenderer 中处理 */
 .prose pre {
-  @apply bg-[#111113] text-zinc-400 p-4 rounded-lg overflow-x-auto mb-4 border border-white/[0.06];
+  @apply bg-[#0d1117] text-[#e6edf3] rounded-xl overflow-hidden mb-4 border border-[#333] shadow-xl;
 }
 
 .prose pre code {
-  @apply bg-transparent p-0 border-none text-sm;
+  @apply bg-transparent p-0 border-none text-sm font-mono;
 }
 
+/* 表格 - 中性色 */
 .prose table {
-  @apply w-full mb-4 border-collapse;
+  @apply w-full mb-4 border-collapse border border-[#F3F4F6] rounded-lg;
 }
 
 .prose th {
-  @apply bg-[#111113] text-white font-medium text-left px-4 py-2 border border-white/[0.06];
+  @apply bg-[#F9FAFB] text-[#1F2937] font-semibold text-left px-4 py-3 border border-[#F3F4F6];
 }
 
 .prose td {
-  @apply px-4 py-2 border border-white/[0.06];
+  @apply px-4 py-3 border border-[#F3F4F6];
 }
 
 .prose tr:hover {
-  @apply bg-white/[0.02];
+  @apply bg-[#F9FAFB];
 }
 
+/* 分割线 */
 .prose hr {
-  @apply border-white/[0.06] my-8;
+  @apply border-[#F3F4F6] my-8;
 }
 
+/* 图片 */
 .prose img {
-  @apply rounded-lg my-4 max-w-full h-auto;
+  @apply rounded-xl my-4 max-w-full h-auto border border-[#F3F4F6] shadow-sm;
 }
 
+/* 强调 */
 .prose strong {
-  @apply text-white font-semibold;
+  @apply text-[#1F2937] font-bold;
 }
 
 .prose em {
@@ -95,5 +119,5 @@
 }
 
 .prose del {
-  @apply line-through text-zinc-500;
+  @apply line-through text-[#9CA3AF];
 }

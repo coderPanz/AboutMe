@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ExternalLink, RefreshCw, Calendar, Clock, TrendingUp, Globe } from 'lucide-react'
+import { ExternalLink, RefreshCw, Calendar, Clock, TrendingUp, Globe, AlertCircle } from 'lucide-react'
 
 interface NewsArticle {
   source: {
@@ -37,6 +37,15 @@ const categoryNames: Record<string, string> = {
   health: '健康',
   sports: '体育',
   entertainment: '娱乐'
+}
+
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  technology: { bg: '#ECFDF5', text: '#10B981', border: '#10B981' },
+  business: { bg: '#FFFBEB', text: '#FBBF24', border: '#FBBF24' },
+  science: { bg: '#EFF6FF', text: '#3B82F6', border: '#3B82F6' },
+  health: { bg: '#ECFDF5', text: '#10B981', border: '#10B981' },
+  sports: { bg: '#F9FAFB', text: '#9CA3AF', border: '#9CA3AF' },
+  entertainment: { bg: '#FFFBEB', text: '#FBBF24', border: '#FBBF24' },
 }
 
 export default function DailyReport() {
@@ -85,10 +94,10 @@ export default function DailyReport() {
 
   if (loading) {
     return (
-      <div className="bg-[#0c0c0c] min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-[#F9FAFB] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-2 border-[#22c55e] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-mono text-[#525252]">loading...</p>
+          <div className="w-12 h-12 border-2 border-[#10B981] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-[#9CA3AF]">加载中...</p>
         </div>
       </div>
     )
@@ -96,24 +105,24 @@ export default function DailyReport() {
 
   if (error) {
     return (
-      <div className="bg-[#0c0c0c] min-h-screen flex items-center justify-center">
-        <div className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] max-w-md">
-          <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-[#222222]">
-            <div className="terminal-dot terminal-dot--red" />
-            <div className="terminal-dot terminal-dot--yellow" />
-            <div className="terminal-dot terminal-dot--green" />
-            <span className="ml-4 font-mono text-sm text-[#737373]">error</span>
+      <div className="min-h-screen bg-[#F9FAFB] py-12 px-6 flex items-center justify-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="card-modern p-12 text-center max-w-md"
+        >
+          <div className="w-16 h-16 rounded-2xl bg-[#FFFBEB] flex items-center justify-center mx-auto mb-6">
+            <AlertCircle size={32} className="text-[#FBBF24]" />
           </div>
-          <div className="p-8 bg-[#0c0c0c] text-center">
-            <p className="text-[#ff5f56] font-mono mb-4">error: {error}</p>
-            <button
-              onClick={fetchReport}
-              className="btn-primary text-sm font-mono"
-            >
-              retry
-            </button>
-          </div>
-        </div>
+          <h3 className="text-xl font-bold text-[#1F2937] mb-2">加载失败</h3>
+          <p className="text-[#4B5563] mb-6">{error}</p>
+          <button
+            onClick={fetchReport}
+            className="btn-primary"
+          >
+            重试
+          </button>
+        </motion.div>
       </div>
     )
   }
@@ -123,43 +132,38 @@ export default function DailyReport() {
   const currentCategory = report.categories.find(c => c.name === activeCategory)
 
   return (
-    <div className="bg-[#0c0c0c] min-h-screen">
-      <div className="max-w-4xl mx-auto px-6 py-20">
-        {/* Header - Terminal style */}
+    <div className="min-h-screen bg-[#F9FAFB]">
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <div className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] mb-8">
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-[#222222]">
-              <div className="terminal-dot terminal-dot--red" />
-              <div className="terminal-dot terminal-dot--yellow" />
-              <div className="terminal-dot terminal-dot--green" />
-              <span className="ml-4 font-mono text-sm text-[#737373]">curl -X GET /api/daily-report</span>
-            </div>
-          </div>
-
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h1 className="editorial-display text-5xl md:text-6xl text-white mb-4">
-                每日热点
+              <div className="hero-tag mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                <span>每日热点</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">
+                今日资讯
               </h1>
-              <div className="flex items-center gap-4 text-[#737373] font-mono text-sm">
+              <div className="flex items-center gap-4 text-[#9CA3AF] text-sm">
                 <span className="flex items-center gap-1.5">
-                  <Calendar size={14} />
+                  <Calendar size={14} className="text-[#3B82F6]" />
                   {formatDate(report.date)}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Clock size={14} />
+                  <Clock size={14} className="text-[#3B82F6]" />
                   {formatTime(report.generatedAt)}
                 </span>
               </div>
             </div>
             <button
               onClick={fetchReport}
-              className="p-2 bg-[#1a1a1a] text-[#737373] hover:text-[#22c55e] border border-[#222222] hover:border-[#22c55e] transition-colors"
+              className="p-3 bg-white text-[#9CA3AF] hover:text-[#10B981] border border-[#F3F4F6] rounded-xl hover:border-[#10B981] transition-all"
               title="刷新"
             >
               <RefreshCw size={18} />
@@ -167,33 +171,28 @@ export default function DailyReport() {
           </div>
         </motion.div>
 
-        {/* Overview - Terminal style */}
+        {/* Overview */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] mb-8"
+          className="card-modern p-6 mb-8"
         >
-          <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border-b border-[#222222]">
-            <TrendingUp size={14} className="text-[#525252]" />
-            <span className="font-mono text-xs text-[#737373]">overview</span>
-          </div>
-          <div className="p-6 bg-[#0c0c0c]">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-[#22c55e]/10 rounded">
-                <TrendingUp size={20} className="text-[#22c55e]" />
-              </div>
-              <div>
-                <p className="text-white leading-relaxed">{report.overview}</p>
-                <p className="text-[#525252] text-sm mt-2 font-mono">
-                  <span className="text-[#22c55e]">$</span> total articles: {report.totalArticles}
-                </p>
-              </div>
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-[#ECFDF5] rounded-xl">
+              <TrendingUp size={24} className="text-[#10B981]" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-lg font-bold text-[#1F2937] mb-2">今日概览</h2>
+              <p className="text-[#4B5563] leading-relaxed">{report.overview}</p>
+              <p className="text-sm text-[#9CA3AF] mt-3">
+                共 {report.totalArticles} 篇文章
+              </p>
             </div>
           </div>
         </motion.div>
 
-        {/* Category Tabs - Terminal style */}
+        {/* Category Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -201,30 +200,39 @@ export default function DailyReport() {
           className="mb-8"
         >
           <div className="flex flex-wrap gap-2">
-            {report.categories.map((category) => (
-              <button
-                key={category.name}
-                onClick={() => setActiveCategory(category.name)}
-                className={`px-4 py-2 rounded text-sm font-mono transition-colors ${
-                  activeCategory === category.name
-                    ? 'bg-[#22c55e] text-[#0c0c0c]'
-                    : 'bg-[#1a1a1a] text-[#737373] hover:text-white border border-[#222222]'
-                }`}
-              >
-                {categoryNames[category.name] || category.name}
-                <span className="ml-1.5 opacity-60">({category.articles.length})</span>
-              </button>
-            ))}
+            {report.categories.map((category) => {
+              const colors = categoryColors[category.name] || categoryColors.technology
+              const isActive = activeCategory === category.name
+              return (
+                <button
+                  key={category.name}
+                  onClick={() => setActiveCategory(category.name)}
+                  className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    isActive
+                      ? 'text-white shadow-sm'
+                      : 'bg-white text-[#4B5563] hover:text-[#1F2937] border border-[#F3F4F6] hover:border-[#E5E7EB]'
+                  }`}
+                  style={
+                    isActive
+                      ? { backgroundColor: colors.border }
+                      : {}
+                  }
+                >
+                  {categoryNames[category.name] || category.name}
+                  <span className="ml-1.5 opacity-60">({category.articles.length})</span>
+                </button>
+              )
+            })}
           </div>
         </motion.div>
 
-        {/* Articles List - Terminal style */}
+        {/* Articles List */}
         <motion.div
           key={activeCategory}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="space-y-px bg-[#1a1a1a] border border-[#1a1a1a]"
+          className="space-y-4"
         >
           {currentCategory?.articles.map((article, index) => (
             <motion.a
@@ -235,35 +243,35 @@ export default function DailyReport() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="block bg-[#0c0c0c] hover:bg-[#111111] p-5 transition-colors group"
+              className="group card-modern block p-5"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
-                    <Globe size={12} className="text-[#525252]" />
-                    <span className="text-[#22c55e] text-xs font-mono">
+                    <Globe size={12} className="text-[#9CA3AF]" />
+                    <span className="text-[#10B981] text-xs font-medium">
                       {article.source.name}
                     </span>
-                    <span className="text-[#525252] text-xs">•</span>
-                    <span className="text-[#525252] text-xs font-mono">
+                    <span className="text-[#F3F4F6] text-xs">•</span>
+                    <span className="text-[#9CA3AF] text-xs">
                       {new Date(article.publishedAt).toLocaleTimeString('zh-CN', {
                         hour: '2-digit',
                         minute: '2-digit'
                       })}
                     </span>
                   </div>
-                  <h3 className="text-white font-medium mb-2 line-clamp-2 group-hover:text-[#22c55e] transition-colors">
+                  <h3 className="text-[#1F2937] font-semibold mb-2 line-clamp-2 group-hover:text-[#10B981] transition-colors">
                     {article.title}
                   </h3>
                   {article.description && (
-                    <p className="text-[#737373] text-sm line-clamp-2">
+                    <p className="text-[#4B5563] text-sm line-clamp-2">
                       {article.description}
                     </p>
                   )}
                 </div>
                 <ExternalLink
-                  size={14}
-                  className="text-[#525252] group-hover:text-[#22c55e] transition-colors flex-shrink-0 mt-1"
+                  size={16}
+                  className="text-[#F3F4F6] group-hover:text-[#3B82F6] transition-colors flex-shrink-0 mt-1"
                 />
               </div>
             </motion.a>
@@ -272,8 +280,8 @@ export default function DailyReport() {
 
         {/* Empty State */}
         {currentCategory?.articles.length === 0 && (
-          <div className="text-center py-12 border border-[#1a1a1a] bg-[#0c0c0c]">
-            <p className="font-mono text-[#525252]">no news available</p>
+          <div className="card-modern p-12 text-center">
+            <p className="text-[#9CA3AF]">暂无新闻</p>
           </div>
         )}
       </div>

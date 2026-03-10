@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
-import { Calendar, Clock, ChevronRight, FolderOpen } from 'lucide-react'
+import { Calendar, Clock, ChevronRight, ArrowLeft, FolderOpen } from 'lucide-react'
 import { getBlogPostsByCategory } from '../data/blog'
 
 // 获取文章的完整 slug 路径
@@ -14,44 +14,45 @@ export default function BlogCategory() {
   const posts = getBlogPostsByCategory(decodedCategory)
 
   return (
-    <div className="bg-[#0c0c0c] min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-20">
-        {/* Header - Terminal style */}
+    <div className="min-h-screen bg-[#F9FAFB] py-12 px-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Back link */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
+          className="mb-8"
         >
-          <div className="terminal-window rounded-lg overflow-hidden border border-[#2a2a2a] mb-8">
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-[#222222]">
-              <div className="terminal-dot terminal-dot--red" />
-              <div className="terminal-dot terminal-dot--yellow" />
-              <div className="terminal-dot terminal-dot--green" />
-              <span className="ml-4 font-mono text-sm text-[#737373]">
-                ls ./blog/{decodedCategory.toLowerCase()}
-              </span>
-            </div>
-          </div>
-
           <Link
             to="/blog"
-            className="inline-flex items-center text-[#525252] hover:text-[#22c55e] mb-6 transition-colors font-mono text-sm"
+            className="inline-flex items-center gap-2 text-[#9CA3AF] hover:text-[#3B82F6] transition-colors"
           >
-            <span className="mr-2">←</span>
-            cd ..
+            <ArrowLeft size={18} />
+            <span>返回博客</span>
           </Link>
+        </motion.div>
 
-          <h1 className="editorial-display text-5xl md:text-6xl text-white mb-4">
-            {decodedCategory}
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-12"
+        >
+          <div className="hero-tag mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+            <span>分类浏览</span>
+          </div>
+
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">
+            <span className="title-highlight">{decodedCategory}</span>
           </h1>
-          <p className="font-mono text-sm text-[#737373]">
-            <span className="text-[#22c55e]">$</span> wc -l ./*.{' '}
-            <span className="text-[#525252]">// {posts.length} posts</span>
+          <p className="text-[#9CA3AF]">
+            共 {posts.length} 篇文章
           </p>
         </motion.div>
 
-        {/* Blog List - Terminal style */}
+        {/* Blog List */}
         <div className="space-y-4">
           {posts.map((post, index) => (
             <motion.article
@@ -63,40 +64,44 @@ export default function BlogCategory() {
             >
               <Link
                 to={`/blog/${getPostSlug(post)}`}
-                className="group block p-6 bg-[#1a1a1a] border border-[#222222] hover:border-[#22c55e] transition-colors"
+                className="group card-modern block p-6"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     {/* Meta */}
-                    <div className="flex items-center gap-4 text-xs text-[#525252] mb-3 font-mono">
+                    <div className="flex items-center gap-4 text-sm text-[#9CA3AF] mb-3">
                       <span className="flex items-center gap-1.5">
-                        <Calendar size={14} />
+                        <Calendar size={14} className="text-[#3B82F6]" />
                         {post.date}
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Clock size={14} />
+                        <Clock size={14} className="text-[#3B82F6]" />
                         {post.readTime} min
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-lg font-semibold text-white mb-2 group-hover:text-[#22c55e] transition-colors">
+                    <h2 className="text-lg font-bold text-[#1F2937] mb-2 group-hover:text-[#10B981] transition-colors">
                       {post.title}
                     </h2>
 
                     {/* Excerpt */}
-                    <p className="text-[#737373] text-sm leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-[#4B5563] text-sm leading-relaxed mb-4 line-clamp-2">
                       {post.excerpt}
                     </p>
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
+                      {(post.tags || []).map((tag, idx) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 text-xs text-[#22c55e] bg-[#22c55e]/10 font-mono border border-[#22c55e]/20"
+                          className={`text-xs ${
+                            idx % 3 === 0 ? 'tag-primary' : 
+                            idx % 3 === 1 ? 'tag-secondary' : 
+                            'tag-accent'
+                          }`}
                         >
-                          #{tag}
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -105,7 +110,7 @@ export default function BlogCategory() {
                   {/* Arrow */}
                   <ChevronRight
                     size={20}
-                    className="text-[#525252] group-hover:text-[#22c55e] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"
+                    className="text-[#F3F4F6] group-hover:text-[#3B82F6] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"
                   />
                 </div>
               </Link>
@@ -115,12 +120,21 @@ export default function BlogCategory() {
 
         {/* Empty state */}
         {posts.length === 0 && (
-          <div className="text-center py-20 border border-[#1a1a1a] bg-[#0c0c0c]">
-            <FolderOpen size={48} className="mx-auto text-[#525252] mb-4" />
-            <p className="font-mono text-[#525252]">
-              <span className="text-[#ff5f56]">error</span>: no posts found in this category
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="card-modern p-12 text-center"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-[#F9FAFB] flex items-center justify-center mx-auto mb-6">
+              <FolderOpen size={32} className="text-[#9CA3AF]" />
+            </div>
+            <h3 className="text-xl font-bold text-[#1F2937] mb-2">
+              暂无文章
+            </h3>
+            <p className="text-[#9CA3AF]">
+              该分类下暂时没有文章
             </p>
-          </div>
+          </motion.div>
         )}
       </div>
     </div>
